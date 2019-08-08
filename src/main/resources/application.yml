@@ -1,0 +1,30 @@
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/community?useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    不配，默认使用tomcat的数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+#   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+server:
+  port: 8887
+
+github:
+  client:
+    id: 67e02325958dedeaf220
+    secret: 62b8cec7cb3c201c47fa668f63ecd18e609535a7
+    uri: http://localhost:8887/callback
