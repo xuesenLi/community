@@ -1,9 +1,12 @@
 package com.lxs.community.dto;
 
+import lombok.Data;
+
 /**
  * @author Mr.Li
  * @date 2019/8/6 - 20:50
  */
+@Data
 public class GithubUser {
     private String name;
 
@@ -11,27 +14,7 @@ public class GithubUser {
 
     private String bio;
 
-    public String getName() {
-        return name;
-    }
+    //获取github头像路径
+    private String avatar_url;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
 }

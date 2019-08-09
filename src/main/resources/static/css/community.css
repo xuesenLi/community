@@ -22,7 +22,8 @@ body {
 }
 
 .media-body {
-    padding-top: 10px;
+    padding-top: 0px;
+    /*修改*/
 }
 
 .text-desc {

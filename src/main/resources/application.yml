@@ -28,3 +28,8 @@ github:
     id: 67e02325958dedeaf220
     secret: 62b8cec7cb3c201c47fa668f63ecd18e609535a7
     uri: http://localhost:8887/callback
+
+# 驼峰标识
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

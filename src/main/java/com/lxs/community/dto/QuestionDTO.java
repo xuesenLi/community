@@ -1,13 +1,15 @@
-package com.lxs.community.model;
+package com.lxs.community.dto;
 
+import com.lxs.community.model.User;
 import lombok.Data;
 
 /**
  * @author Mr.Li
- * @date 2019/8/8 - 16:27
+ * @date 2019/8/9 - 11:09
  */
 @Data
-public class Question {
+public class QuestionDTO {
+
     private Integer id;
     private String title;
     private String description;
@@ -19,4 +21,5 @@ public class Question {
     private Integer commentCount;
     private Integer likeCount;
 
+    private User user;
 }

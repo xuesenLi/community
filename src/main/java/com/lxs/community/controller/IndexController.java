@@ -1,7 +1,12 @@
 package com.lxs.community.controller;
 
+import com.lxs.community.dto.PaginationDTO;
+import com.lxs.community.dto.QuestionDTO;
+import com.lxs.community.mapper.QuestionMapper;
 import com.lxs.community.mapper.UserMapper;
+import com.lxs.community.model.Question;
 import com.lxs.community.model.User;
+import com.lxs.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Mr.Li
@@ -19,24 +25,16 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexController {
 
     @Autowired
-    private UserMapper userMapper;
+    private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    if(user != null){
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+    public String index(Model model,
+                        @RequestParam(value = "page", defaultValue = "1") Integer page,
+                        @RequestParam(value = "size", defaultValue = "5") Integer size){
 
+        //展示页表信息
+        PaginationDTO paginationDTO = questionService.list(page, size);
+        model.addAttribute("pagination", paginationDTO);
         return "index";
     }
 
