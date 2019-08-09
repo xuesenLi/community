@@ -5,6 +5,7 @@ import com.lxs.community.dto.GithubUser;
 import com.lxs.community.mapper.UserMapper;
 import com.lxs.community.model.User;
 import com.lxs.community.provider.GithubProvider;
+import com.lxs.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -36,7 +38,7 @@ public class AuthorizeController {
     private String clientUri;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
@@ -55,18 +57,17 @@ public class AuthorizeController {
         GithubUser githubUser = githubProvider.getUser(accessToken);
         System.out.println(githubUser.getName());
         //如果user不为null 说明登录成功。
-        if(githubUser != null){
+        if(githubUser != null && githubUser.getId() != null){
             //向数据库中插入用户
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatar_url());
 
-            userMapper.insert(user);
+            //如果数据库有该用户则更新， 无 创建
+            userService.createOrUpdate(user);
 
             //登录成功， 写cookie和session
             //通过response写入cookie
@@ -80,5 +81,19 @@ public class AuthorizeController {
             return "redirect:/";
 
         }
+    }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        //清除session
+        request.getSession().removeAttribute("user");
+        //清除cookie
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0); //马上删除
+        response.addCookie(cookie);
+
+
+        return "redirect:/";
     }
 }
