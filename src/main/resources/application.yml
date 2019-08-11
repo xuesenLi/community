@@ -33,3 +33,8 @@ github:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+    #mybatis配置
+  type-aliases-package: com.lxs.community.model
+  mapper-locations: classpath:mapper/*.xml
+
+

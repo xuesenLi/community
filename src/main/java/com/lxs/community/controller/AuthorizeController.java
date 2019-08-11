@@ -96,4 +96,11 @@ public class AuthorizeController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/about")
+    public String about(){
+
+        return "about";
+    }
+
 }

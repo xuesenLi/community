@@ -26,22 +26,28 @@ function comment2target(targetId, type, content) {
             "content": content,
             "type": type
         }),
+        dataType: "json",
         success: function (response) {
+            //通过错误码打印相应message
             if (response.code == 200) {
                 window.location.reload();
             } else {
                 if (response.code == 2003) {
+                    //windows 确定框
                     var isAccepted = confirm(response.message);
                     if (isAccepted) {
-                        window.open("https://github.com/login/oauth/authorize?client_id=2859958f9f059979ed3a&redirect_uri=" + document.location.origin + "/callback&scope=user&state=1");
+                        //window.open("https://github.com/login/oauth/authorize?client_id=2859958f9f059979ed3a&redirect_uri=" + document.location.origin + "/callback&scope=user&state=1");
+                        window.open("https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://localhost:8887/callback&scope=user&state=1");
+
+                        //localStorage : 用于保存整个网站的数据
                         window.localStorage.setItem("closable", true);
                     }
                 } else {
                     alert(response.message);
                 }
             }
-        },
-        dataType: "json"
+        }
+
     });
 }
 

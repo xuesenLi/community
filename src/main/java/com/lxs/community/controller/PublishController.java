@@ -45,6 +45,7 @@ public class PublishController {
         return "publish";
     }
 
+    //点击发布
     @PostMapping("/publish")
     public String doPublish(
             @RequestParam(value = "title", required = false) String title,
@@ -84,7 +85,7 @@ public class PublishController {
         question.setCreator(user.getId());
 
         //通过Id 判断是否是新增  还是 修改  若Id 为空 则为新增
-        question.setId(id);
+        question.setId(id);  //可以为空
 
         questionService.createOrUpdate(question);
         return "redirect:/";
