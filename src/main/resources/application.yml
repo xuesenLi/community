@@ -22,6 +22,8 @@ spring:
     poolPreparedStatements: true
 server:
   port: 8887
+#  servlet:
+#    context-path: /lxs
 
 github:
   client:

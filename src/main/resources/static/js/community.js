@@ -54,6 +54,7 @@ function comment2target(targetId, type, content) {
 function comment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
+    //回复评论  type  = 2
     comment2target(commentId, 2, content);
 }
 
@@ -72,7 +73,11 @@ function collapseComments(e) {
         e.removeAttribute("data-collapse");
         e.classList.remove("active");
     } else {
+
+        //向这个元素添加子标签 //
         var subCommentContainer = $("#comment-" + id);
+
+        //获取子元素个数  如果不等于1， 说明数据已经展示过了 ，  直接显示就行了
         if (subCommentContainer.children().length != 1) {
             //展开二级评论
             comments.addClass("in");
@@ -81,6 +86,7 @@ function collapseComments(e) {
             e.classList.add("active");
         } else {
             $.getJSON("/comment/" + id, function (data) {
+                //.reverse() 颠倒数组中元素顺序  。
                 $.each(data.data.reverse(), function (index, comment) {
                     var mediaLeftElement = $("<div/>", {
                         "class": "media-left"
@@ -100,7 +106,7 @@ function collapseComments(e) {
                         "class": "menu"
                     }).append($("<span/>", {
                         "class": "pull-right",
-                        "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
+                        "html": moment(comment.gmtCreate).format("YYYY-MM-DD")
                     })));
 
                     var mediaElement = $("<div/>", {
@@ -120,6 +126,9 @@ function collapseComments(e) {
                 e.classList.add("active");
             });
         }
+
+
+
     }
 }
 
@@ -130,11 +139,21 @@ function showSelectTag() {
 function selectTag(e) {
     var value = e.getAttribute("data-tag");
     var previous = $("#tag").val();
+    //indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+    //不存在才添加, 如果存在点击 就删除
     if (previous.indexOf(value) == -1) {
         if (previous) {
             $("#tag").val(previous + ',' + value);
         } else {
             $("#tag").val(value);
+        }
+    }else{
+
+        $("#tag").val(previous.replace(','+value, ""));
+        //还有说明是在第一个位置
+        if (previous.indexOf(value) == -1){
+            alert("mejilai");
+            $("#tag").val(previous.replace(value, ""));
         }
     }
 }

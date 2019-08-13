@@ -1,5 +1,6 @@
 package com.lxs.community.controller;
 
+import com.lxs.community.cache.TagCache;
 import com.lxs.community.dto.QuestionDTO;
 import com.lxs.community.mapper.QuestionMapper;
 import com.lxs.community.model.Question;
@@ -36,12 +37,17 @@ public class PublishController {
         model.addAttribute("tag", question.getTag());
         model.addAttribute("id", question.getId());
 
+        model.addAttribute("tags", TagCache.get());
+
         return "publish";
     }
 
 
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+
+        model.addAttribute("tags", TagCache.get());
+
         return "publish";
     }
 
@@ -58,6 +64,8 @@ public class PublishController {
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+
+        model.addAttribute("tags", TagCache.get());
 
         if(title == null || title == ""){
             model.addAttribute("error", "标题不能为空");

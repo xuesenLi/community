@@ -45,8 +45,8 @@ body {
 }
 
 .question-related {
-    line-height: 20px;
-    font-size: 12px;
+    line-height: 25px;
+    font-size: 17px;
     margin-left: 0;
     list-style: none;
     padding-left: 0;
@@ -63,6 +63,7 @@ body {
 }
 
 .publish-tag-tab .label-info {
+    /*//自动换行*/
     white-space: normal;
     margin: 5px 5px;
     display: inline-block;

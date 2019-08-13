@@ -5,5 +5,11 @@
 <mapper namespace="com.lxs.community.mapper.QuestionMapper">
 
 
+    <!--模糊查找-->
+    <select id="selectQuestionByTags" parameterType="question" resultType="question">
+        SELECT * FROM question
+        WHERE id != #{id} AND tag regexp #{tag}
+    </select>
+
 
 </mapper>

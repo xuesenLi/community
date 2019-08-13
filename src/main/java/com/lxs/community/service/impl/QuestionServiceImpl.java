@@ -13,9 +13,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author Mr.Li
@@ -62,7 +66,7 @@ public class QuestionServiceImpl implements QuestionService{
 
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
 
 
         return paginationDTO;
@@ -98,7 +102,7 @@ public class QuestionServiceImpl implements QuestionService{
 
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
 
         return paginationDTO;
     }
@@ -142,4 +146,33 @@ public class QuestionServiceImpl implements QuestionService{
     public void incView(Integer id) {
         questionMapper.updateViewCount(id);
     }
+
+    @Override
+    public List<QuestionDTO> selectQuestionByTags(QuestionDTO questionDTO) {
+        if(questionDTO.getTag() == null || questionDTO.getTag() == ""){
+            return new ArrayList<>();
+        }
+
+       // String[] tags = StringUtils.split(questionDTO.getTag(), ",");
+        String[] tags = questionDTO.getTag().split(",");
+        //在通过 ‘|’ 符号拼接 ，  sql语句才能识别
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        System.out.println(regexpTag);
+
+        Question question = new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(regexpTag);
+
+        List<Question> questions = questionMapper.selectQuestionByTags(question);
+
+        List<QuestionDTO> questionDTOList = questions.stream().map(q -> {
+            QuestionDTO questionDTO1 = new QuestionDTO();
+            BeanUtils.copyProperties(q, questionDTO1);
+            return questionDTO1;
+        }).collect(Collectors.toList());
+
+
+        return questionDTOList;
+    }
+
 }

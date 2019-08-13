@@ -2,10 +2,7 @@ package com.lxs.community.mapper;
 
 import com.lxs.community.enums.CommentTypeEnum;
 import com.lxs.community.model.Comment;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,8 +17,11 @@ public interface CommentMapper {
     void insert(Comment comment);
 
     @Select("select * from comment where id=#{id}")
-    Comment selectById(Comment comment);
+    Comment selectById(@Param("id") Integer comment);
 
-    @Select("select * from comment where parent_id=#{parentId} and type=#{type}")
+    @Select("select * from comment where parent_id=#{parentId} and type=#{type} order by gmt_create desc")
     List<Comment> selectByParentId(@Param("parentId") Integer id, @Param("type") Integer type);
+
+    @Update("update comment set comment_count = comment_count + 1 where id=#{id}")
+    void incCommentCount(@Param("id") Integer parentId);
 }

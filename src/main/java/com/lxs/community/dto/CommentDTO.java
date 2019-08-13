@@ -19,7 +19,7 @@ public class CommentDTO {
 
     private String content;
 
-    private Integer commentCount;  //
+    private Integer commentCount;  //子评论个数
 
     private User user;
 

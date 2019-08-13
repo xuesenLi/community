@@ -1,10 +1,8 @@
 package com.lxs.community.service;
 
 import com.lxs.community.dto.CommentDTO;
-import com.lxs.community.mapper.CommentMapper;
 import com.lxs.community.model.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.lxs.community.model.User;
 
 import java.util.List;
 
@@ -15,12 +13,13 @@ import java.util.List;
 
 public interface CommentService {
 
-    void insert(Comment comment);
+    void insert(Comment comment, User user);
 
     /**
      * 查找该问题下面的所有评论
      * @param id
+     * @param type
      * @return
      */
-    List<CommentDTO> ListByQuestionId(Integer id);
+    List<CommentDTO> ListByQuestionId(Integer id, Integer type);
 }

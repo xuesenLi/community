@@ -32,4 +32,11 @@ public interface QuestionService {
     void createOrUpdate(Question question);
 
     void incView(Integer id);
+
+    /**
+     * 通过标签模糊查找
+     * @param questionDTO
+     * @return
+     */
+    List<QuestionDTO> selectQuestionByTags(QuestionDTO questionDTO);
 }
