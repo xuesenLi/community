@@ -11,5 +11,26 @@
         WHERE id != #{id} AND tag regexp #{tag}
     </select>
 
+    <select id="countBySearch" parameterType="com.lxs.community.dto.QuestionQueryDTO" resultType="int">
+        SELECT count(*) FROM question
+        <where>
+            <if test="search != null and search != ''">
+                AND title regexp #{search}
+            </if>
+        </where>
+    </select>
+
+    <!---->
+    <select id="selectBySearch" parameterType="com.lxs.community.dto.QuestionQueryDTO" resultType="question">
+        select * from question
+        <where>
+            <if test="search != null and search != ''">
+                AND title regexp #{search}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{page}, #{size}
+
+    </select>
 
 </mapper>

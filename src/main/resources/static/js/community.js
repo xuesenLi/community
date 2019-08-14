@@ -149,11 +149,15 @@ function selectTag(e) {
         }
     }else{
 
-        $("#tag").val(previous.replace(','+value, ""));
+        $("#tag").val(previous.replace(value+',', ""));
+
+        var previous1 = $("#tag").val();
+        $("#tag").val(previous1.replace(','+ value, ""));
+
+        var previous2 = $("#tag").val();
+        $("#tag").val(previous2.replace(value, ""));
+
+
         //还有说明是在第一个位置
-        if (previous.indexOf(value) == -1){
-            alert("mejilai");
-            $("#tag").val(previous.replace(value, ""));
-        }
     }
 }

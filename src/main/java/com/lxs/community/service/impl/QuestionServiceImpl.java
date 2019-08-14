@@ -2,6 +2,7 @@ package com.lxs.community.service.impl;
 
 import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.QuestionDTO;
+import com.lxs.community.dto.QuestionQueryDTO;
 import com.lxs.community.exception.CustomizeErrorCode;
 import com.lxs.community.exception.CustomizeException;
 import com.lxs.community.mapper.QuestionMapper;
@@ -34,11 +35,17 @@ public class QuestionServiceImpl implements QuestionService{
     private QuestionMapper questionMapper;
 
     //分页查询
-    public PaginationDTO list(Integer page, Integer size){
+    public PaginationDTO list(String search, Integer page, Integer size){
 
+        if(search != null && search != ""){
+            String[] split = search.split(" ");
+            search = Arrays.stream(split).collect(Collectors.joining("|"));
+        }
 
         //查询总数
-        Integer totalCount = questionMapper.count();
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionMapper.countBySearch(questionQueryDTO);
 
         PaginationDTO paginationDTO = new PaginationDTO();
         //计算分页显示的图标
@@ -53,8 +60,9 @@ public class QuestionServiceImpl implements QuestionService{
 
         //当前页的第一条数据
         Integer offset = size * (page - 1);
-
-        List<Question> questions = questionMapper.findByQuestionAll(offset, size);
+        questionQueryDTO.setPage(offset);
+        questionQueryDTO.setSize(size);
+        List<Question> questions = questionMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         for (Question question : questions) {
@@ -71,6 +79,7 @@ public class QuestionServiceImpl implements QuestionService{
 
         return paginationDTO;
     }
+
 
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         //查询总数
@@ -155,7 +164,7 @@ public class QuestionServiceImpl implements QuestionService{
 
        // String[] tags = StringUtils.split(questionDTO.getTag(), ",");
         String[] tags = questionDTO.getTag().split(",");
-        //在通过 ‘|’ 符号拼接 ，  sql语句才能识别
+        //在通过 ‘|’ 符号拼接 ，  sql语句才能识别  正则匹配
         String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
         System.out.println(regexpTag);
 

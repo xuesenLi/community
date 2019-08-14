@@ -1,5 +1,6 @@
 package com.lxs.community.mapper;
 
+import com.lxs.community.dto.QuestionQueryDTO;
 import com.lxs.community.model.Question;
 import org.apache.ibatis.annotations.*;
 
@@ -40,5 +41,11 @@ public interface QuestionMapper {
     void updateCommentCount(Integer id);
 
     List<Question> selectQuestionByTags(Question question);
+
+    //返回加入search 条件后的count
+    Integer countBySearch(QuestionQueryDTO questionQueryDTO);
+
+
+    List<Question> selectBySearch(QuestionQueryDTO questionQueryDTO);
 
 }

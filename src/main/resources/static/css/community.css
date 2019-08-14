@@ -1,5 +1,6 @@
 body {
     background-color: #efefef;
+    background:url(/images/bg.jpg) repeat;
 }
 
 .main {
@@ -141,4 +142,7 @@ body {
 .footer {
     text-align: center;
     color: #666;;
+}
+.navbarI{
+    background-color: #499ef3;
 }

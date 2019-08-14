@@ -99,6 +99,11 @@ public class CommentServiceImpl implements CommentService{
 
     //展示通知
     private void createNotification(Comment comment, Integer receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationTYpe, Integer outerId) {
+
+        //如果自己给自己回复 或者评论就不通知
+        /*if(receiver == comment.getCommentator()){
+            return;
+        }*/
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationTYpe.getType());

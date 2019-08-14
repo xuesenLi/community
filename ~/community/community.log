@@ -1,0 +1,19 @@
+2019-08-14 11:06:34.334  INFO 11284 --- [restartedMain] com.lxs.community.CommunityApplication   : Starting CommunityApplication on DESKTOP-7SOQ3K9 with PID 11284 (D:\workspace_idea_02\community\target\classes started by 14500 in D:\workspace_idea_02\community)
+2019-08-14 11:06:34.339  INFO 11284 --- [restartedMain] com.lxs.community.CommunityApplication   : No active profile set, falling back to default profiles: default
+2019-08-14 11:06:34.444  INFO 11284 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-08-14 11:06:34.445  INFO 11284 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-08-14 11:06:36.400  WARN 11284 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[lxs.com.community.mapper]' package. Please check your configuration.
+2019-08-14 11:06:37.388  INFO 11284 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2019-08-14 11:06:37.413  INFO 11284 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-14 11:06:37.414  INFO 11284 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-08-14 11:06:37.519  INFO 11284 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-14 11:06:37.520  INFO 11284 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3075 ms
+2019-08-14 11:06:38.377  INFO 11284 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-14 11:06:38.525  INFO 11284 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-08-14 11:06:38.690  INFO 11284 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-08-14 11:06:38.787  INFO 11284 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2019-08-14 11:06:38.790  INFO 11284 --- [restartedMain] com.lxs.community.CommunityApplication   : Started CommunityApplication in 5.197 seconds (JVM running for 18.152)
+2019-08-14 11:06:50.070  INFO 11284 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-14 11:06:50.070  INFO 11284 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-08-14 11:06:50.081  INFO 11284 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 11 ms
+2019-08-14 11:06:50.274  INFO 11284 --- [http-nio-8887-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
