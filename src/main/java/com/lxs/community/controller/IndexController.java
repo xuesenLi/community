@@ -1,6 +1,7 @@
 package com.lxs.community.controller;
 
 import com.lxs.community.cache.HotTagCache;
+import com.lxs.community.dto.HotTagDTO;
 import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.QuestionDTO;
 import com.lxs.community.mapper.QuestionMapper;
@@ -44,7 +45,7 @@ public class IndexController {
         //展示页表信息
         PaginationDTO paginationDTO = questionService.list(search, tag, page, size);
 
-        List<String> tags = hotTagCache.getHots();
+        List<HotTagDTO> hotTags = hotTagCache.getHots();
 
         model.addAttribute("pagination", paginationDTO);
 
@@ -52,10 +53,7 @@ public class IndexController {
         model.addAttribute("search", search);
         model.addAttribute("tag", tag);
 
-
-        model.addAttribute("tags", tags);
-
-
+        model.addAttribute("hotTags", hotTags);
         return "index";
     }
 

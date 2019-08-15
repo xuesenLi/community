@@ -1,6 +1,7 @@
 package com.lxs.community.schedule;
 
 import com.lxs.community.cache.HotTagCache;
+import com.lxs.community.dto.HotTagDTO;
 import com.lxs.community.mapper.QuestionMapper;
 import com.lxs.community.model.Question;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class HotTagTasks {
         log.info("reportCurrentTime is star {}__________", new Date());
 
         List<Question> list = new ArrayList<>();
-        Map<String, Integer> tagMap = new HashMap<>();
+        Map<String, HotTagDTO> tagMap = new HashMap<>();
 
         while(offset == 0 || list.size() == limit){
 
@@ -46,11 +47,24 @@ public class HotTagTasks {
                 //自定义热度 排序方式
                 // 该标签对应的问题数 * 5   +  问题的回复个数
                 for (String tag : tags) {
-                    Integer priority = tagMap.get(tag);
-                    if(priority != null){
-                        tagMap.put(tag, priority + 5 + question.getCommentCount());
+                    HotTagDTO hotTagDTO = tagMap.get(tag);
+                    if(hotTagDTO != null){
+                        HotTagDTO hotTagDTO1 = new HotTagDTO();
+
+                        hotTagDTO1.setPriority(hotTagDTO.getPriority() + 5 + question.getCommentCount());
+                        hotTagDTO1.setQuestionCountSum(hotTagDTO.getQuestionCountSum() + 1);
+                        hotTagDTO1.setViewCountSum(hotTagDTO.getViewCountSum() + question.getViewCount());
+
+                        tagMap.put(tag, hotTagDTO1);
                     }else{
-                        tagMap.put(tag, 5 + question.getCommentCount());
+
+                        HotTagDTO hotTagDTO1 = new HotTagDTO();
+
+                        hotTagDTO1.setPriority(5 + question.getCommentCount());
+                        hotTagDTO1.setQuestionCountSum(1);
+                        hotTagDTO1.setViewCountSum(question.getViewCount());
+
+                        tagMap.put(tag, hotTagDTO1);
                     }
                 }
 
@@ -58,17 +72,21 @@ public class HotTagTasks {
             offset += limit;
         }
 
-        /*hotTagCache.getTags().forEach(
-                (k,v) -> {
-            System.out.print(k);
-            System.out.print(" : ");
-            System.out.print(v);
-            System.out.println();
-        }
-        );*/
+
+/*       tagMap.forEach(
+               (k, v) -> {
+                   System.out.print(k);
+                   System.out.print(" : ");
+                   System.out.print(v.getPriority() + ", "+ v.getViewCountSum() + ", " + v.getQuestionCountSum());
+                   System.out.println();
+
+               }
+       );*/
+
 
         //拿到热度最大的 Max 个的标签
         hotTagCache.updateTags(tagMap);
+
 
         log.info("reportCurrentTime is end {}__________", new Date());
     }

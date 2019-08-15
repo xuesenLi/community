@@ -13,6 +13,11 @@ public class HotTagDTO implements Comparable {
     private String name;
     private Integer priority;
 
+    //总问题数
+    private Integer questionCountSum;
+
+    //总浏览数
+    private Integer viewCountSum;
     //默认为小顶堆， 需要重写为大顶堆
     @Override
     public int compareTo(Object o) {
