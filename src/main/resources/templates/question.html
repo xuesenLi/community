@@ -3,32 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${question.title}"></title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/community.css">
-    <link rel="stylesheet" href="/css/editormd.min.css">
-    <link rel="stylesheet" href="/css/editormd.preview.min.css">
 
-    <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="/js/community.js" type="application/javascript"></script>
-    <script src="/js/editormd.min.js" type="application/javascript"></script>
-    <script src="/js/lib/marked.min.js" type="application/javascript"></script>
-    <script src="/js/lib/prettify.min.js" type="application/javascript"></script>
-
+    <head th:insert="~{common :: head}"></head>
+    <head th:insert="~{common :: markdown}"></head>
 
 </head>
 <script type="application/javascript">
 
-/*    window.onload = function () {
-        //debugger;
-        var closable = window.localStorage.getItem("closable");
-        if(closable == "true"){
-            window.close();
-            window.localStorage.removeItem("closable")
-        }
-
-    }*/
 </script>
 
 <body>

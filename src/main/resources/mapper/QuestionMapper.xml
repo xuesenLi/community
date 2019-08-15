@@ -17,6 +17,9 @@
             <if test="search != null and search != ''">
                 AND title regexp #{search}
             </if>
+            <if test="tag != null and tag != ''">
+                AND tag regexp #{tag}
+            </if>
         </where>
     </select>
 
@@ -26,6 +29,9 @@
         <where>
             <if test="search != null and search != ''">
                 AND title regexp #{search}
+            </if>
+            <if test="tag != null and tag != ''">
+                AND tag regexp #{tag}
             </if>
         </where>
         order by gmt_create desc

@@ -22,10 +22,10 @@ body {
     height: 38px;
 }
 
-.media-body {
+/*.media-body {
     padding-top: 0px;
-    /*修改*/
-}
+    !*修改*!
+}*/
 
 .text-desc {
     font-size: 12px;
@@ -54,7 +54,7 @@ body {
 }
 
 .question-wechat {
-    width: 95%;
+    width: 100%;
 }
 
 .publish-tag-tab {

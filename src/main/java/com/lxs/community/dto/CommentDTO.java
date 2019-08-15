@@ -6,6 +6,7 @@ import lombok.Data;
 /**
  * @author Mr.Li
  * @date 2019/8/11 - 20:42
+ * 封装评论回复功能返回的DTO
  */
 @Data
 public class CommentDTO {

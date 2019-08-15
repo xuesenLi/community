@@ -42,7 +42,7 @@ public interface QuestionMapper {
 
     List<Question> selectQuestionByTags(Question question);
 
-    //返回加入search 条件后的count
+    //返回加入search \  tag  条件后的count
     Integer countBySearch(QuestionQueryDTO questionQueryDTO);
 
 

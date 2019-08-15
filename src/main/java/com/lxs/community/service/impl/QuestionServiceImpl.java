@@ -35,8 +35,9 @@ public class QuestionServiceImpl implements QuestionService{
     private QuestionMapper questionMapper;
 
     //分页查询
-    public PaginationDTO list(String search, Integer page, Integer size){
+    public PaginationDTO list(String search, String tag, Integer page, Integer size){
 
+        //需要分割search 但是search不能为空
         if(search != null && search != ""){
             String[] split = search.split(" ");
             search = Arrays.stream(split).collect(Collectors.joining("|"));
@@ -45,8 +46,14 @@ public class QuestionServiceImpl implements QuestionService{
         //查询总数
         QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
         questionQueryDTO.setSearch(search);
-        Integer totalCount = questionMapper.countBySearch(questionQueryDTO);
+        questionQueryDTO.setTag(tag);
 
+        Integer totalCount = questionMapper.countBySearch(questionQueryDTO);
+        //如果totalCount == 0， 就没必要在做后面分页查找的 操作了
+        if(totalCount == 0){
+            return new PaginationDTO();
+        }
+        
         PaginationDTO paginationDTO = new PaginationDTO();
         //计算分页显示的图标
         paginationDTO.setPagination(totalCount, page, size);

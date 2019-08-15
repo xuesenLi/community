@@ -5,7 +5,6 @@ import com.lxs.community.dto.TagDTO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TagCache {
     public static List<TagDTO> get() {
@@ -38,19 +37,4 @@ public class TagCache {
         return tagDTOS;
     }
 
-/*    public static String filterInvalid(String tags) {
-       // String[] split = StringUtils.split(tags, ",");
-        String[] split = tags.split(",");
-        List<TagDTO> tagDTOS = get();
-        // flatMap : 针对二维数组
-        List<String> tagList = tagDTOS.stream().flatMap(tag -> tag.getTags().stream()).collect(Collectors.toList());
-
-        String invalid = Arrays.stream(split).filter(t -> StringUtils.isBlank(t) || !tagList.contains(t)).collect(Collectors.joining(","));
-        return invalid;
-    }
-
-    public static void main(String[] args) {
-        int i = (5 - 1) >>> 1;
-        System.out.println(i);
-    }*/
 }

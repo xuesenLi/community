@@ -6,6 +6,7 @@ import lombok.Data;
 /**
  * @author Mr.Li
  * @date 2019/8/9 - 11:09
+ * 分页查找返回的DTO
  */
 @Data
 public class QuestionDTO {

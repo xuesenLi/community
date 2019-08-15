@@ -5,6 +5,7 @@ import lombok.Data;
 /**
  * @author Mr.Li
  * @date 2019/8/6 - 19:48
+ * github授权
  */
 @Data
 public class AccessTokenDTO {

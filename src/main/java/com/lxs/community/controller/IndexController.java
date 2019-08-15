@@ -1,5 +1,6 @@
 package com.lxs.community.controller;
 
+import com.lxs.community.cache.HotTagCache;
 import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.QuestionDTO;
 import com.lxs.community.mapper.QuestionMapper;
@@ -28,18 +29,31 @@ public class IndexController {
     @Autowired
     private QuestionService questionService;
 
+    //定时器
+    @Autowired
+    private HotTagCache hotTagCache;
+
+
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(value = "page", defaultValue = "1") Integer page,
                         @RequestParam(value = "size", defaultValue = "8") Integer size,
-                        @RequestParam(value = "search", required = false) String search){
+                        @RequestParam(value = "search", required = false) String search,
+                        @RequestParam(value = "tag", required = false) String tag){
 
         //展示页表信息
-        PaginationDTO paginationDTO = questionService.list(search, page, size);
+        PaginationDTO paginationDTO = questionService.list(search, tag, page, size);
+
+        List<String> tags = hotTagCache.getHots();
+
         model.addAttribute("pagination", paginationDTO);
 
+        //回显的作用
         model.addAttribute("search", search);
+        model.addAttribute("tag", tag);
 
+
+        model.addAttribute("tags", tags);
 
 
         return "index";

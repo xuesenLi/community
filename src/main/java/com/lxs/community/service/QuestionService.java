@@ -23,7 +23,7 @@ import java.util.List;
 public interface QuestionService {
 
     //分页查询
-    PaginationDTO list(String search, Integer page, Integer size);
+    PaginationDTO list(String s, String tag, Integer page, Integer size);
 
     PaginationDTO list(Integer userId, Integer page, Integer size);
 

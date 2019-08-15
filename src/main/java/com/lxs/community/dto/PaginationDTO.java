@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author Mr.Li
  * @date 2019/8/9 - 13:07
+ * 封装前端分页查找的 对象
  */
 @Data
 public class PaginationDTO<T> {
