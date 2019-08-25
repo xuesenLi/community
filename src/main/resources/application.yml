@@ -21,15 +21,15 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
 server:
-  port: 8887
+  port: 80
 #  servlet:
 #    context-path: /lxs
 
 github:
   client:
     id: 67e02325958dedeaf220
-    secret: 62b8cec7cb3c201c47fa668f63ecd18e609535a7
-    uri: http://localhost:8887/callback
+    secret: 6cd575b362cc40f51ffa5c94db443d6dcb6772d2
+    uri: http://xuesenli.top:80/callback
 
 # 驼峰标识
 mybatis:
