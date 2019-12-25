@@ -50,6 +50,11 @@
                     </li>
                     <li><a href="/profile/replies">通知 <span class="badge" th:text="${session.unreadCount}"></span></a>
                     </li>
+                    <li>
+                        <a href="/music" target="_blank" title="Music">
+
+                            <i class="fa fa-fw fa-music"></i>&nbsp;&nbsp;Music</a>
+                    </li>
                     <li class="dropdown" th:if="${session.user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false">

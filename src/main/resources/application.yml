@@ -3,7 +3,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/community?useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://39.96.18.72:3306/community?useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    不配，默认使用tomcat的数据源
     type: com.alibaba.druid.pool.DruidDataSource
@@ -20,6 +20,9 @@ spring:
     testOnBorrow: false
     testOnReturn: false
     poolPreparedStatements: true
+  jpa:
+    hibernate:
+      ddl-auto: update
 server:
   port: 80
 #  servlet:
@@ -38,5 +41,3 @@ mybatis:
     #mybatis配置
   type-aliases-package: com.lxs.community.model
   mapper-locations: classpath:mapper/*.xml
-
-

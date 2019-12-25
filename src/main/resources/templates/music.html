@@ -7,22 +7,24 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <meta name="description" content="初音未来版本的通过点击/触摸播放声音并出现变化图案的互动内容。">
-  <title>Mikutap</title>
-  <link rel="apple-touch-icon" href="icon.png">
+  <title>xuesenLi</title>
+  <link rel="apple-touch-icon" href="/images/icon.png">
   <link href="https://fonts.loli.net/css?family=Quicksand:400" rel="stylesheet">
-  <link charset="UTF-8" href="shared/sp/css/common.css" rel="stylesheet">
-  <link charset="utf-8" href="css/mikutap.css" rel="stylesheet">
+  <link charset="UTF-8" href="/shared/sp/css/common.css" rel="stylesheet">
+  <link charset="utf-8" href="/css/mikutap.css" rel="stylesheet">
+  <link rel="stylesheet" href="/layer/mobile/need/layer.css">
   <script charset="utf-8" src="https://cdnjs.loli.net/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
   <script charset="utf-8" src="https://cdnjs.loli.net/ajax/libs/pixi.js/3.0.11/pixi.min.js" type="text/javascript"></script>
   <script charset="utf-8" src="https://cdnjs.loli.net/ajax/libs/gsap/1.19.1/TweenMax.min.js" type="text/javascript"></script>
-  <script charset="UTF-8" src="shared/js/common-2.min.js" type="text/javascript"></script>
-  <script charset="utf-8" src="js/mikutap.min.js" type="text/javascript"></script>
+  <script charset="UTF-8" src="/shared/js/common-2.min.js" type="text/javascript"></script>
+  <script charset="utf-8" src="/js/mikutap.min.js" type="text/javascript"></script>
+  <script charset="UTF-8" src="/layer/layer.js" type="text/javascript"></script>
 </head>
 
-<body>
+<body onbeforeunload="goodbye()">
   <div id="view"></div>
   <div id="scene_top">
-    <h1>Mikutap</h1>
+    <h1 onclick="christmas()">    Z   </h1>
     <div id="ng">
       <p class="atten">十分抱歉<br>您的浏览器并不支持本页面需要的特性</p>
     </div>
@@ -34,7 +36,6 @@
       <p class="attention">※请打开声音并享受。</p>
     </div>
      <div class="ok">
-     <p class="tit"><strong>注意！搬运内容，原页面(Origin Site): <a href="https://aidn.jp/mikutap">https://aidn.jp/mikutap</a></strong></p>
     </div>
   </div>
   <div id="scene_loading">
@@ -54,8 +55,71 @@
       <p class="link"> 灵感来源 <a href="http://patatap.com/" target="_blank">Patatap</a><br>(令人赞叹的网页!)</p>
     </div>
   </div>
-  <div id="bt_back">＜返回</div>
+  <div onclick="christmas()">＜返回</div>
+<!--
+  <div onclick="christmas()">＜点我</div>
+-->
   <div id="bt_fs">□全屏显示</div>
 </body>
+<script>
 
+  window.onbeforeunload=function(e){
+    var e = window.event||e;
+    e.returnValue=("确定离开当前页面吗？");
+  }
+  /*window.onbeforeunload = function (e) {
+    e = e || window.event;
+// 兼容IE8和Firefox 4之前的版本
+    if (e) {
+      e.returnValue = '关闭提示';
+    }
+// Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+    return '关闭提示';
+  };*/
+
+
+  function christmas() {
+    //layer.msg('Merry Christmas');
+    //提示
+    layer.msg(' Merry Christmas ');
+
+  }
+
+  window.onload = function(){
+    layer.msg(' Merry Christmas ');
+    /*layer.confirm('您是如何看待前端开发？', {
+      btn: ['重要','奇葩'] //按钮  
+    }, function(){
+      layer.msg('的确很重要', {icon: 1});
+    }, function() {
+      layer.msg('也可以这样', {
+        time: 20000, //20s后自动关闭  
+        btn: ['明白了', '知道了']
+      });
+    });*/
+  }
+
+  $(function(){
+    pushHistory();
+    window.addEventListener("popstate", function(e) {
+
+      //根据自己的需求实现自己的功能
+        layer.msg('Are you sure you want to leave？', {
+          time: 20000, //20s后自动关闭  
+          btn: ['of course']
+      },function () {
+          layer.msg('害');
+        });
+
+    }, false);
+    function pushHistory() {
+      var state = {
+        title: "title",
+        url: "#"
+      };
+      window.history.pushState(state, "title", "#");
+    }
+  });
+  
+</script>
 </html>
