@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <meta name="description" content="初音未来版本的通过点击/触摸播放声音并出现变化图案的互动内容。">
-  <title>xuesenLi</title>
+  <title>zxy</title>
   <link rel="apple-touch-icon" href="/images/icon.png">
   <link href="https://fonts.loli.net/css?family=Quicksand:400" rel="stylesheet">
   <link charset="UTF-8" href="/shared/sp/css/common.css" rel="stylesheet">
@@ -24,7 +24,7 @@
 <body onbeforeunload="goodbye()">
   <div id="view"></div>
   <div id="scene_top">
-    <h1 onclick="christmas()">    Z   </h1>
+    <h1 onclick="christmas()"> Z </h1>
     <div id="ng">
       <p class="atten">十分抱歉<br>您的浏览器并不支持本页面需要的特性</p>
     </div>
@@ -65,7 +65,7 @@
 
   window.onbeforeunload=function(e){
     var e = window.event||e;
-    e.returnValue=("确定离开当前页面吗？");
+    e.returnValue=("Are you sure ？");
   }
   /*window.onbeforeunload = function (e) {
     e = e || window.event;
@@ -81,12 +81,13 @@
   function christmas() {
     //layer.msg('Merry Christmas');
     //提示
-    layer.msg(' Merry Christmas ');
+    var randomNum = Math.ceil(Math.random() * 10);
+    layer.msg(' 猪妖 ');
 
   }
 
   window.onload = function(){
-    layer.msg(' Merry Christmas ');
+    //layer.msg(' Merry Christmas ');
     /*layer.confirm('您是如何看待前端开发？', {
       btn: ['重要','奇葩'] //按钮  
     }, function(){
@@ -104,7 +105,7 @@
     window.addEventListener("popstate", function(e) {
 
       //根据自己的需求实现自己的功能
-        layer.msg('Are you sure you want to leave？', {
+        layer.msg('Are you sure ？', {
           time: 20000, //20s后自动关闭  
           btn: ['of course']
       },function () {
