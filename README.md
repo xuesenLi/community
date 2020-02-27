@@ -10,6 +10,6 @@
 ##工具
 
 BeanUtils <br>
-
+github OAuth
 
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
