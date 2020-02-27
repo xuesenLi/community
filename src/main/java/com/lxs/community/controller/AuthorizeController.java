@@ -47,6 +47,8 @@ public class AuthorizeController {
                            @RequestParam(name = "state") String state,
                            HttpServletResponse response){
 
+        log.info("code = {}, state = {}", code, state);
+
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -56,8 +58,10 @@ public class AuthorizeController {
 
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
 
+        //通过accessToken获取 user
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        System.out.println(githubUser.getName());
+        log.info("登录用户：{} ", githubUser.getName());
+
         //如果user不为null 说明登录成功。
         if(githubUser != null && githubUser.getId() != null){
             //向数据库中插入用户
@@ -68,7 +72,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setAvatarUrl(githubUser.getAvatar_url());
 
-            //如果数据库有该用户则更新， 无 创建
+            //如果数据库有该用户则更新， 无创建
             userService.createOrUpdate(user);
 
             //登录成功， 写cookie和session

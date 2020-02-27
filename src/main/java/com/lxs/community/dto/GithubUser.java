@@ -13,7 +13,7 @@ public class GithubUser {
 
     private Long id;
 
-    private String bio;
+    private String bio;  //描述
 
     //获取github头像路径
     private String avatar_url;

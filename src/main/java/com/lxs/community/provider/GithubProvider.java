@@ -3,6 +3,7 @@ package com.lxs.community.provider;
 import com.alibaba.fastjson.JSON;
 import com.lxs.community.dto.AccessTokenDTO;
 import com.lxs.community.dto.GithubUser;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
  * @date 2019/8/6 - 19:42
  */
 @Component
+@Slf4j
 public class GithubProvider {
 
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
@@ -47,6 +49,7 @@ public class GithubProvider {
             Response response =  client.newCall(request).execute();
 
             String string = response.body().string();
+            log.info("GET https://api.github.com/user 返回的 json : {}", string);
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
             return githubUser;
 
