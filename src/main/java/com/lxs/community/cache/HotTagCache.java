@@ -17,7 +17,7 @@ public class HotTagCache {
 
     //拿到热度最大的 Max 个的标签
     //通过定时器调用这个方法
-    public void updateTags(Map<String, HotTagDTO> tags){
+    public void updateTags(Map<String, HotTagDTO> tags) {
         int Max = 6;
         PriorityQueue<HotTagDTO> priorityQueue = new PriorityQueue<>();
         tags.forEach((name, hots) -> {
@@ -27,11 +27,11 @@ public class HotTagCache {
             hotTagDTO.setQuestionCountSum(hots.getQuestionCountSum());
             hotTagDTO.setViewCountSum(hots.getViewCountSum());
 
-            if(priorityQueue.size() < Max){
+            if (priorityQueue.size() < Max) {
                 priorityQueue.add(hotTagDTO);
-            }else{
+            } else {
                 HotTagDTO minHot = priorityQueue.peek();
-                if(hotTagDTO.compareTo(minHot) > 0 ){
+                if (hotTagDTO.compareTo(minHot) > 0) {
                     priorityQueue.poll();
                     priorityQueue.add(hotTagDTO);
                 }
@@ -41,8 +41,8 @@ public class HotTagCache {
         List<HotTagDTO> sortedTags = new ArrayList<>();
 
         HotTagDTO poll = priorityQueue.poll();
-        while (poll != null){
-            sortedTags.add(0,poll);
+        while (poll != null) {
+            sortedTags.add(0, poll);
             poll = priorityQueue.poll();
         }
         hots = sortedTags;

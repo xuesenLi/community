@@ -1,6 +1,6 @@
 body {
     background-color: #efefef;
-    background:url(/images/bg.jpg) repeat;
+    background: url(/images/bg.jpg) repeat;
 }
 
 .main {
@@ -143,6 +143,7 @@ body {
     text-align: center;
     color: #666;;
 }
-.navbarI{
+
+.navbarI {
     background-color: #499ef3;
 }

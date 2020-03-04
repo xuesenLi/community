@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @date 2019/8/10 - 17:17
  */
 @Service
-public class QuestionServiceImpl implements QuestionService{
+public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private UserMapper userMapper;
 
@@ -35,10 +35,10 @@ public class QuestionServiceImpl implements QuestionService{
     private QuestionMapper questionMapper;
 
     //分页查询
-    public PaginationDTO list(String search, String tag, Integer page, Integer size){
+    public PaginationDTO list(String search, String tag, Integer page, Integer size) {
 
         //需要分割search 但是search不能为空
-        if(search != null && search != ""){
+        if (search != null && search != "") {
             String[] split = search.split(" ");
             search = Arrays.stream(split).collect(Collectors.joining("|"));
         }
@@ -50,10 +50,10 @@ public class QuestionServiceImpl implements QuestionService{
 
         Integer totalCount = questionMapper.countBySearch(questionQueryDTO);
         //如果totalCount == 0， 就没必要在做后面分页查找的 操作了
-        if(totalCount == 0){
+        if (totalCount == 0) {
             return new PaginationDTO();
         }
-        
+
         PaginationDTO paginationDTO = new PaginationDTO();
         //计算分页显示的图标
         paginationDTO.setPagination(totalCount, page, size);
@@ -127,12 +127,12 @@ public class QuestionServiceImpl implements QuestionService{
 
         Question question = questionMapper.getById(id);
         //错误异常处理, 通过枚举  自定义异常
-        if(question == null ){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
 
         QuestionDTO questionDTO = new QuestionDTO();
-        BeanUtils.copyProperties(question,questionDTO);
+        BeanUtils.copyProperties(question, questionDTO);
         //再拿user对象
         User user = userMapper.findById(question.getCreator());
         questionDTO.setUser(user);
@@ -141,17 +141,17 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     public void createOrUpdate(Question question) {
-        if(question.getId() == null){
+        if (question.getId() == null) {
             //新增
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             questionMapper.create(question);
-        }else{
+        } else {
             //更新  只需要设置更新时间。
             question.setGmtModified(System.currentTimeMillis());
 
             int updated = questionMapper.update(question);
-            if(updated != 1){
+            if (updated != 1) {
                 //通过枚举  自定义异常
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
@@ -165,11 +165,11 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public List<QuestionDTO> selectQuestionByTags(QuestionDTO questionDTO) {
-        if(questionDTO.getTag() == null || questionDTO.getTag() == ""){
+        if (questionDTO.getTag() == null || questionDTO.getTag() == "") {
             return new ArrayList<>();
         }
 
-       // String[] tags = StringUtils.split(questionDTO.getTag(), ",");
+        // String[] tags = StringUtils.split(questionDTO.getTag(), ",");
         String[] tags = questionDTO.getTag().split(",");
         //在通过 ‘|’ 符号拼接 ，  sql语句才能识别  正则匹配
         String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));

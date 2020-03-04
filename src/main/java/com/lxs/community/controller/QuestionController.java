@@ -27,9 +27,10 @@ public class QuestionController {
 
     @Autowired
     private CommentService commentService;
+
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Integer id,
-                           Model model){
+                           Model model) {
 
         QuestionDTO questionDTO = questionService.getById(id);
 
@@ -37,12 +38,12 @@ public class QuestionController {
         List<QuestionDTO> relatedQuestions = questionService.selectQuestionByTags(questionDTO);
 
         //显示评论区
-        List<CommentDTO> comments =  commentService.ListByQuestionId(id, CommentTypeEnum.QUESTION.getType());
+        List<CommentDTO> comments = commentService.ListByQuestionId(id, CommentTypeEnum.QUESTION.getType());
 
         //通过 Find Usages查看该方法在哪里调用过。
         //累加阅读数， 不能够在questionService.getById(id)这个里面去写，其他操作也调用了getById方法。。
         questionService.incView(id);
-        questionDTO.setViewCount(questionDTO.getViewCount()+1);
+        questionDTO.setViewCount(questionDTO.getViewCount() + 1);
         model.addAttribute("question", questionDTO);
         model.addAttribute("comments", comments);
         model.addAttribute("relatedQuestions", relatedQuestions);

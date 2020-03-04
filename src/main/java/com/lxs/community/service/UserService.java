@@ -1,9 +1,8 @@
 package com.lxs.community.service;
 
-import com.lxs.community.mapper.UserMapper;
+import com.lxs.community.dto.ResponseVO;
 import com.lxs.community.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 
 /**
  * @author Mr.Li
@@ -11,5 +10,28 @@ import org.springframework.stereotype.Service;
  */
 
 public interface UserService {
-       void createOrUpdate(User user);
+    /**
+     * 修改或者更新github账号。
+     *
+     * @param user
+     */
+    void createOrUpdate(User user);
+
+    /**
+     * 登录
+     *
+     * @param email
+     * @param password
+     * @return
+     */
+    ResponseVO<User> login(String email, String password);
+
+    /**
+     * 注册
+     *
+     * @param user
+     * @return
+     */
+    ResponseVO<User> register(User user);
+
 }

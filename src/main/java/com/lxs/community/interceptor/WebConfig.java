@@ -13,20 +13,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 //@EnableWebMvc  //springmvc相关注解 写上会拦截静态资源
-public class WebConfig implements WebMvcConfigurer{
+public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private SessionInterceptor sessionInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(sessionInterceptor)
-                .addPathPatterns("/**");   //拦截所有路径
-
+        //需要排出的拦截请求
+        registry.addInterceptor(new SessionInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/user/login", "/", "/error", "/user/**");
     }
 
-    @Override
+/*    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-    }
+    }*/
 }

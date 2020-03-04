@@ -3,7 +3,7 @@ package com.lxs.community.enums;
 /**
  * @author Mr.Li
  * @date 2019/8/13 - 10:21
- *
+ * <p>
  * 该通知的状态， 是否已被查看
  */
 

@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * @author Mr.Li
  * @date 2019/8/14 - 16:01
- *
+ * <p>
  * spring 定时器 scheduled
  */
 @Component
@@ -27,7 +27,7 @@ public class HotTagTasks {
     @Autowired
     private HotTagCache hotTagCache;
 
-    @Scheduled(fixedRate = 1000*60*60*3)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 3)
     //@Scheduled(cron = "0 0 1 * * *")   //凌晨一点去执行
     public void reportCurrentTime() {
         int offset = 0;
@@ -38,7 +38,7 @@ public class HotTagTasks {
         List<Question> list = new ArrayList<>();
         Map<String, HotTagDTO> tagMap = new HashMap<>();
 
-        while(offset == 0 || list.size() == limit){
+        while (offset == 0 || list.size() == limit) {
 
             list = questionMapper.findByQuestionAll(offset, limit);
             for (Question question : list) {
@@ -48,7 +48,7 @@ public class HotTagTasks {
                 // 该标签对应的问题数 * 5   +  问题的回复个数
                 for (String tag : tags) {
                     HotTagDTO hotTagDTO = tagMap.get(tag);
-                    if(hotTagDTO != null){
+                    if (hotTagDTO != null) {
                         HotTagDTO hotTagDTO1 = new HotTagDTO();
 
                         hotTagDTO1.setPriority(hotTagDTO.getPriority() + 5 + question.getCommentCount());
@@ -56,7 +56,7 @@ public class HotTagTasks {
                         hotTagDTO1.setViewCountSum(hotTagDTO.getViewCountSum() + question.getViewCount());
 
                         tagMap.put(tag, hotTagDTO1);
-                    }else{
+                    } else {
 
                         HotTagDTO hotTagDTO1 = new HotTagDTO();
 

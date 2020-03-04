@@ -3,12 +3,12 @@ package com.lxs.community.exception;
 /**
  * @author Mr.Li
  * @date 2019/8/10 - 15:02
- *
+ * <p>
  * extends RuntimeException 继承这个异常 在调用时就不需要在try catch 了
- *
+ * <p>
  * 通过这个异常类，
  */
-public class CustomizeException extends RuntimeException{
+public class CustomizeException extends RuntimeException {
 
     private String message;
     private Integer code;

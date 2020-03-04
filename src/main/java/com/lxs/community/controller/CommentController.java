@@ -1,7 +1,7 @@
 package com.lxs.community.controller;
 
 import com.lxs.community.dto.CommentDTO;
-import com.lxs.community.dto.ResultDTO;
+import com.lxs.community.dto.ResponseVO;
 import com.lxs.community.enums.CommentTypeEnum;
 import com.lxs.community.exception.CustomizeErrorCode;
 import com.lxs.community.model.Comment;
@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.MessageDigest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Mr.Li
@@ -30,14 +27,14 @@ public class CommentController {
     @ResponseBody
     @PostMapping("/comment")
     public Object post(@RequestBody Comment comment,
-                       HttpServletRequest request){
+                       HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null){
-            return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
+        if (user == null) {
+            return ResponseVO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
-        if(comment == null || comment.getContent() == null || comment.getContent() == ""){
-            return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
+        if (comment == null || comment.getContent() == null || comment.getContent() == "") {
+            return ResponseVO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
 
         comment.setGmtCreate(System.currentTimeMillis());
@@ -48,14 +45,14 @@ public class CommentController {
         //将user传过去即 发送者的name
         commentService.insert(comment, user);
 
-        return ResultDTO.OkOf();
+        return ResponseVO.OkOf();
     }
 
     @ResponseBody
     @GetMapping("/comment/{id}")
-    public ResultDTO<List> comments(@PathVariable("id") Integer id){
+    public ResponseVO<List> comments(@PathVariable("id") Integer id) {
         List<CommentDTO> commentDTOS = commentService.ListByQuestionId(id, CommentTypeEnum.COMMENT.getType());
-        return ResultDTO.OkOf(commentDTOS);
+        return ResponseVO.OkOf(commentDTOS);
     }
 
 }

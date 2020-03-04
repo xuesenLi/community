@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Mr.Li
  * @date 2019/8/9 - 11:10
- *
+ * <p>
  * 应用sevice目的：请求需要组装questionMapper与userMapper时 就使用这个中间层
  */
 public interface QuestionService {
@@ -35,6 +35,7 @@ public interface QuestionService {
 
     /**
      * 通过标签模糊查找
+     *
      * @param questionDTO
      * @return
      */

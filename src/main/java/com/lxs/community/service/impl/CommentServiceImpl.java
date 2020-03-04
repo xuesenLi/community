@@ -6,10 +6,7 @@ import com.lxs.community.enums.NotificationStatusEnum;
 import com.lxs.community.enums.NotificationTypeEnum;
 import com.lxs.community.exception.CustomizeErrorCode;
 import com.lxs.community.exception.CustomizeException;
-import com.lxs.community.mapper.CommentMapper;
-import com.lxs.community.mapper.NotificationMapper;
-import com.lxs.community.mapper.QuestionMapper;
-import com.lxs.community.mapper.UserMapper;
+import com.lxs.community.mapper.*;
 import com.lxs.community.model.Comment;
 import com.lxs.community.model.Notification;
 import com.lxs.community.model.Question;
@@ -31,7 +28,7 @@ import java.util.stream.Collectors;
  * @date 2019/8/10 - 17:14
  */
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
@@ -43,29 +40,32 @@ public class CommentServiceImpl implements CommentService{
     private UserMapper userMapper;
 
     @Autowired
-    private NotificationMapper notificationMapper;
+    private UserInfoMapper userInfoMapper;
 
+
+    @Autowired
+    private NotificationMapper notificationMapper;
 
 
     //添加事务
     @Transactional
     public void insert(Comment comment, User commentator) {
-        if(comment.getParentId() == null || comment.getParentId() == 0){
+        if (comment.getParentId() == null || comment.getParentId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
-        if(comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())){
+        if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) {
             throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         }
-        if(comment.getType() == CommentTypeEnum.COMMENT.getType()){
+        if (comment.getType() == CommentTypeEnum.COMMENT.getType()) {
             //回复评论
             Comment dbComment = commentMapper.selectById(comment.getParentId());
-            if(dbComment == null){
+            if (dbComment == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
 
             //回复问题
             Question question = questionMapper.getById(dbComment.getParentId());
-            if(question == null){
+            if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
 
@@ -76,10 +76,10 @@ public class CommentServiceImpl implements CommentService{
             //展示通知
             createNotification(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT, question.getId());
 
-        }else{
+        } else {
             //回复问题
             Question question = questionMapper.getById(comment.getParentId());
-            if(question == null){
+            if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
 
@@ -91,8 +91,6 @@ public class CommentServiceImpl implements CommentService{
             createNotification(comment, question.getCreator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_QUESTION, question.getId());
 
         }
-
-
 
 
     }
@@ -131,7 +129,7 @@ public class CommentServiceImpl implements CommentService{
         List<Comment> comments = commentMapper.selectByParentId(id, type);
 
         //返回 CommentDTO 的user 对象
-        if(comments.size() == 0){
+        if (comments.size() == 0) {
             return new ArrayList<>();
         }
 

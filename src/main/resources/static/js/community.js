@@ -128,7 +128,6 @@ function collapseComments(e) {
         }
 
 
-
     }
 }
 
@@ -147,12 +146,12 @@ function selectTag(e) {
         } else {
             $("#tag").val(value);
         }
-    }else{
+    } else {
 
-        $("#tag").val(previous.replace(value+',', ""));
+        $("#tag").val(previous.replace(value + ',', ""));
 
         var previous1 = $("#tag").val();
-        $("#tag").val(previous1.replace(','+ value, ""));
+        $("#tag").val(previous1.replace(',' + value, ""));
 
         var previous2 = $("#tag").val();
         $("#tag").val(previous2.replace(value, ""));

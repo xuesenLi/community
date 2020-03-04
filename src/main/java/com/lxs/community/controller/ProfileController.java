@@ -28,36 +28,35 @@ public class ProfileController {
 
 
     @GetMapping("/profile/{action}")
-    public String profile(@PathVariable(name="action") String action,
+    public String profile(@PathVariable(name = "action") String action,
                           Model model, HttpServletRequest request,
                           @RequestParam(value = "page", defaultValue = "1") Integer page,
-                          @RequestParam(value = "size", defaultValue = "5") Integer size){
+                          @RequestParam(value = "size", defaultValue = "5") Integer size) {
 
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null){
+        if (user == null) {
             return "redirect:/";
         }
 
-        if("questions".equals(action)){
+        if ("questions".equals(action)) {
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的问题");
 
             PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
             model.addAttribute("pagination", paginationDTO);
 
-        }else if("replies".equals(action)){
+        } else if ("replies".equals(action)) {
             PaginationDTO paginationDTO = notificationService.list(user.getId(), page, size);
 
             //在拦截器中实现
             //返回当前用户未查看的通知
             //Integer unreadCount = notificationService.unreadCount(user.getId());
 
-           //model.addAttribute("unreadCount", unreadCount);
+            //model.addAttribute("unreadCount", unreadCount);
             model.addAttribute("pagination", paginationDTO);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
         }
-
 
 
         return "profile";

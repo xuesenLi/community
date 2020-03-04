@@ -29,9 +29,9 @@ public class PaginationDTO<T> {
     //计算分页显示的图标
     public void setPagination(Integer totalCount, Integer page, Integer size) {
 
-        if(totalCount % size == 0){
+        if (totalCount % size == 0) {
             totalPage = totalCount / size;
-        }else{
+        } else {
             totalPage = totalCount / size + 1;
         }
         if (page < 1) {
@@ -45,41 +45,41 @@ public class PaginationDTO<T> {
 
         //计算pages
         pages.add(page);
-        for(int i = 1; i <= 3; i++){
-            if(page - i > 0 ){
-                pages.add(0 , page-i);
+        for (int i = 1; i <= 3; i++) {
+            if (page - i > 0) {
+                pages.add(0, page - i);
             }
-            if(page + i <= totalPage){
+            if (page + i <= totalPage) {
                 pages.add(page + i);
             }
         }
 
 
         //是否显示上一页
-        if(page == 1){
+        if (page == 1) {
             showPrevious = false;
-        }else{
+        } else {
             showPrevious = true;
         }
 
         //是否显示下一页
-        if(page == totalPage){
+        if (page == totalPage) {
             showNext = false;
-        }else{
+        } else {
             showNext = true;
         }
 
         //是否展示第一页
-        if(pages.contains(1)){
+        if (pages.contains(1)) {
             showFirstPage = false;
-        }else{
+        } else {
             showFirstPage = true;
         }
 
         //是否展示第一页
-        if(pages.contains(totalPage)){
+        if (pages.contains(totalPage)) {
             showEndPage = false;
-        }else{
+        } else {
             showEndPage = true;
         }
     }

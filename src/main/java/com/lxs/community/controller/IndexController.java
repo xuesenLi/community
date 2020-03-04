@@ -38,9 +38,9 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(value = "page", defaultValue = "1") Integer page,
-                        @RequestParam(value = "size", defaultValue = "8") Integer size,
+                        @RequestParam(value = "size", defaultValue = "12") Integer size,
                         @RequestParam(value = "search", required = false) String search,
-                        @RequestParam(value = "tag", required = false) String tag){
+                        @RequestParam(value = "tag", required = false) String tag) {
 
         //展示页表信息
         PaginationDTO paginationDTO = questionService.list(search, tag, page, size);

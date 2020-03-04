@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" th:href="@{/public/admin/favicon.png}" type="image/png">
+    <link rel="stylesheet" th:href="@{/lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/login.css}">
+    <link rel="stylesheet" th:href="@{/lib/font/icon/iconfont.css}">
+</head>
+<body>
+<div id="app">
+    <div class="page-loader" ref="loader">
+        <div class="page-loader__spinner">
+            <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+            </svg>
+        </div>
+    </div>
+    <div id="login">
+        <el-main id="main">
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="5">
+                    <el-card class="login-card">
+                        <div slot="header" class="header">
+                            <span class="item">知识库</span>
+                        </div>
+                        <div id="form">
+                            <!-- 登录表单 -->
+                            <el-form :model="user" status-icon ref="user">
+                                <el-form-item prop="email"
+                                              :rules="[{ required: true, message: '邮箱不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-yonghu" v-model="user.email" placeholder="邮箱"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="password"
+                                              :rules="[{ required: true, message: '密码不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-mima" type="password"
+                                              v-model="user.password" @keyup.enter.native="login" placeholder="密码"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-checkbox class="check">记住我</el-checkbox>
+                                    <el-link type="info" @click="gitHubBtn">github授权登录</el-link>
+                                    <el-link type="info" @click="registerDialogshow">注 册</el-link>
+                                </el-form-item>
+
+                                <el-form-item>
+                                    <el-button class="btn" type="primary" @click="login">登录
+                                    </el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+    </div>
+
+    <!--注册表单-->
+    <!-- 模态框（Modal1） 注册-->
+    <el-dialog title="注册" :visible.sync="registerDialog" width="35%" :close-on-press-escape="false"
+               :close-on-click-modal="false">
+        <el-form ref="form" :model="user">
+            <el-form-item prop="email" label="邮箱" label-width="80px" required>
+                <el-input v-model="user.email"></el-input>
+            </el-form-item>
+            <el-form-item prop="password" label="密码" label-width="80px" required>
+                <el-input type="password" v-model="user.password"></el-input>
+            </el-form-item>
+            <el-form-item prop="name" label="昵称" label-width="80px" required>
+                <el-input v-model="user.name"></el-input>
+            </el-form-item>
+            <el-form-item prop="bio" label="简介" label-width="80px" required>
+                <el-input v-model="user.bio"></el-input>
+            </el-form-item>
+            <el-form-item prop="avatar" v-model="user.avatarUrl" label="头像" label-width="80px">
+                <div class="avatar-uploader">
+                    <div @click="handleEditAvatar" class="el-upload">
+                        <img v-if="user.avatarUrl" :src="user.avatarUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </div>
+                </div>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="gitHubBtn">github授权登录</el-button>
+            <el-button @click="register">注 册</el-button>
+        </span>
+    </el-dialog>
+
+    <el-dialog title="选择头像" :visible.sync="avatarDialog" width="40%" :close-on-press-escape="false"
+               :close-on-click-modal="false">
+        <div class="modal-body">
+            <form>
+                <div class="row default_avatars_list">
+                    <img v-for="item in avatarList" :src="item.url" @click="changeAvatar(item.url)" title="点击更换！">
+                </div>
+            </form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="avatarDialog = false">确 定</el-button>
+            <el-button @click="avatarDialog = false">取 消</el-button>
+        </span>
+    </el-dialog>
+
+
+</div>
+</body>
+
+<div th:replace="common/js"></div>
+<script type="text/javascript" th:src="@{/admin/js/login.js}"></script>
+</html>

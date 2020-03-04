@@ -17,6 +17,7 @@ public interface CommentService {
 
     /**
      * 查找该问题下面的所有评论
+     *
      * @param id
      * @param type
      * @return

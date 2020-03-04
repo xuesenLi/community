@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Mr.Li
  * @date 2019/8/11 - 12:32
- *
+ * <p>
  * //处理自定义拦截不到的异常 4XX：客服端异常， 5XX ： 服务端异常
- *
  */
 @Controller
 @RequestMapping({"${server.error.path:${error.path:/error}}"})

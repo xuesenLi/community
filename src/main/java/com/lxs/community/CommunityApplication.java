@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling //开启定时器 schedule
 public class CommunityApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CommunityApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CommunityApplication.class, args);
+    }
 
 }

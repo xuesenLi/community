@@ -1,0 +1,67 @@
+<header id="header">
+    <nav class="navbar navbar-default navbarI">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">xuesen</span>
+                </button>
+                <a class="navbar-brand" href="/">xuesen</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" action="/" method="get">
+                    <div class="form-group">
+                        <input name="search" type="text" class="form-control" placeholder="搜索问题">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${session.user != null}">
+                        <a href="/publish">提问</a>
+                    </li>
+                    <li th:if="${session.user != null}">
+                        <a href="/profile/replies">通知 <span class="badge" th:text="${session.unreadCount}"></span></a>
+                    </li>
+
+                    <li th:if="${session.user != null}">
+                        <a href="/chat">聊天 </a>
+                    </li>
+
+                    <li class="dropdown" th:if="${session.user != null}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span th:text="${session.user.getName()}"></span>
+                            <span class="caret"> </span>
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile/questions">我的问题</a></li>
+                            <li><a href="/about">关于社区</a></li>
+                            <li><a href="/music" target="_blank" title="Music">Music</a></li>
+                            <li><a href="/logout">退出登陆</a></li>
+                        </ul>
+                    </li>
+
+                    <li th:if="${session.user == null}">
+                        <a href="/user/login">
+                            登录
+                        </a>
+
+                        <!--
+                                                <a href="https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+                        -->
+                        <!--
+                                                <a href="https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://xuesenli.top:80/callback&scope=user&state=1">登录</a>
+                        -->
+                        <!--
+                                                <a th:href="@{https://github.com/login/oauth/authorize(client_id='67e02325958dedeaf220',redirect_uri=${#httpServletRequest.getServletContext().getAttribute('redirectUri')},scope='user',state=1)}">登录</a>
+                        -->
+
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>

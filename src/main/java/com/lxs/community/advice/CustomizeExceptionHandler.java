@@ -1,7 +1,7 @@
 package com.lxs.community.advice;
 
 import com.alibaba.fastjson.JSON;
-import com.lxs.community.dto.ResultDTO;
+import com.lxs.community.dto.ResponseVO;
 import com.lxs.community.exception.CustomizeErrorCode;
 import com.lxs.community.exception.CustomizeException;
 import org.springframework.ui.Model;
@@ -17,12 +17,11 @@ import java.io.PrintWriter;
 /**
  * @author Mr.Li
  * @date 2019/8/10 - 14:54
- *
+ * <p>
  * 页面异常处理
- *
  */
 
-@ControllerAdvice
+/*@ControllerAdvice
 public class CustomizeExceptionHandler {
 
     @ExceptionHandler(Exception.class)
@@ -31,12 +30,12 @@ public class CustomizeExceptionHandler {
 
         String contentType = request.getContentType();
         if("application/json".equals(contentType)){
-            ResultDTO resultDTO = null;
+            ResponseVO responseVO = null;
             //返回json
             if(e instanceof CustomizeException){
-                resultDTO =  ResultDTO.errorOf((CustomizeException) e);
+                responseVO =  ResponseVO.errorOf((CustomizeException) e);
             }else{
-                resultDTO =  ResultDTO.errorOf(CustomizeErrorCode.SYS_ERROR);
+                responseVO =  ResponseVO.errorOf(CustomizeErrorCode.SYS_ERROR);
             }
 
             try {
@@ -44,7 +43,7 @@ public class CustomizeExceptionHandler {
                 response.setStatus(200);
                 response.setCharacterEncoding("utf-8");
                 PrintWriter writer = response.getWriter();
-                writer.write(JSON.toJSONString(resultDTO));
+                writer.write(JSON.toJSONString(responseVO));
 
                 writer.close();
 
@@ -66,4 +65,4 @@ public class CustomizeExceptionHandler {
     }
 
 
-}
+}*/

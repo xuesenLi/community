@@ -4,7 +4,7 @@ package com.lxs.community.exception;
  * @author Mr.Li
  * @date 2019/8/11 - 11:40
  */
-public enum CustomizeErrorCode implements ICustomizeErrorCode{
+public enum CustomizeErrorCode implements ICustomizeErrorCode {
 
     QUESTION_NOT_FOUND(2001, "你找的问题不在了， 要不要换个试试？"),
     TARGET_PARAM_NOT_FOUND(2002, "未选择任何问题或评论进行回复"),

@@ -23,7 +23,7 @@ import java.util.Objects;
  * @date 2019/8/13 - 10:03
  */
 @Service
-public class NotificationServiceimpl implements NotificationService{
+public class NotificationServiceimpl implements NotificationService {
 
     @Autowired
     private NotificationMapper notificationMapper;
@@ -79,7 +79,7 @@ public class NotificationServiceimpl implements NotificationService{
     @Override
     public NotificationDTO read(Integer id, User user) {
         Notification notification = notificationMapper.selectById(id);
-        if(notification == null){
+        if (notification == null) {
             throw new CustomizeException(CustomizeErrorCode.NOTIFICATION_NOT_FOUND);
         }
         if (!Objects.equals(notification.getReceiver(), user.getId())) {
