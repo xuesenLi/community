@@ -1,14 +1,12 @@
 package com.lxs.community.interceptor;
 
-import com.lxs.community.enums.ResponseEnum;
-import com.lxs.community.exception.GlobalException;
 import com.lxs.community.mapper.UserMapper;
 import com.lxs.community.model.User;
 import com.lxs.community.service.NotificationService;
-import com.lxs.community.utils.GlobalConst;
+import com.lxs.community.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,22 +19,24 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019/8/9 - 17:15
  */
 @Slf4j
+@Component
 public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
     private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-       /* Cookie[] cookies = request.getCookies();
+        log.info("进入PreHandle....");
+        Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
+                    User user = userService.selectByToken(token);
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
 
@@ -48,16 +48,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     break;
                 }
             }
-        }*/
-        User user = (User) request.getSession().getAttribute(GlobalConst.CURRENT_USER);
-        if(user == null){
-            //需要返回我们的ResponseVo json数据
-            //1. response.getWriter.print("json串");
-            //2. 抛出自定义异常。。
-            throw new GlobalException("您还未登录");
-            // return ResponseVo.error(ResponseEnum.NEED_LOGIN);
-//            response.sendRedirect("/error");
         }
+        log.info("退出 PreHandle....");
         return true;
     }
 

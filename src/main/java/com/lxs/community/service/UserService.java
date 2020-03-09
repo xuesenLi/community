@@ -34,4 +34,9 @@ public interface UserService {
      */
     ResponseVO<User> register(User user);
 
+    User selectByToken(String token);
+
+    ResponseVO<User> selectById(Integer id);
+
+
 }

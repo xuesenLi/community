@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService {
         User User = userMapper.selectByEmail(email);
         if (User == null) {
             //用户不存在 返回： 用户名或则密码错误
-            return ResponseVO.errorOf(ResponseEnum.EMAIL_OR_PASSWORD_ERROR);
+            throw new GlobalException(ResponseEnum.EMAIL_OR_PASSWORD_ERROR.getMessage());
         }
         //忽略大小写比较
         log.info("MD5 ==== {}", DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8)));
 
         if (!User.getPassword().equalsIgnoreCase(DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8)))) {
             //用户不存在 返回： 用户名或则密码错误
-            return ResponseVO.errorOf(ResponseEnum.EMAIL_OR_PASSWORD_ERROR);
+            throw new GlobalException(ResponseEnum.EMAIL_OR_PASSWORD_ERROR.getMessage());
         }
         //将密码隐藏
         User.setPassword("");
@@ -92,4 +92,19 @@ public class UserServiceImpl implements UserService {
         return ResponseVO.OkOf(user);
     }
 
+    @Override
+    public User selectByToken(String token) {
+        User user = userMapper.selectByToken(token);
+        log.info("user =======", user);
+        return user;
+    }
+
+    @Override
+    public ResponseVO<User> selectById(Integer id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if(user == null){
+            return ResponseVO.errorOf(ResponseEnum.USER_EXIST);
+        }
+        return ResponseVO.OkOf(user);
+    }
 }

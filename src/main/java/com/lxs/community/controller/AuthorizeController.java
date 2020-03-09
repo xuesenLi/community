@@ -3,8 +3,10 @@ package com.lxs.community.controller;
 import com.lxs.community.dto.AccessTokenDTO;
 import com.lxs.community.dto.GithubUser;
 import com.lxs.community.dto.ResponseVO;
+import com.lxs.community.enums.ResponseEnum;
 import com.lxs.community.form.LoginForm;
 import com.lxs.community.form.RegisterForm;
+import com.lxs.community.mapper.UserMapper;
 import com.lxs.community.model.User;
 import com.lxs.community.provider.GithubProvider;
 import com.lxs.community.service.UserService;
@@ -87,7 +89,7 @@ public class AuthorizeController {
             response.addCookie(new Cookie("token", token));
 
             //TODO 这里没有user.id
-            session.setAttribute(GlobalConst.CURRENT_USER, user);
+            //session.setAttribute(GlobalConst.CURRENT_USER, user);
             // request.getSession().setAttribute("user", githubUser);
             //重定向到index页面去, 使uri不是redirect_uri=http://localhost:8887/callback&scope=user&state=1
             return "redirect:/";
@@ -110,8 +112,8 @@ public class AuthorizeController {
         response.addCookie(cookie);
 
         //清除session
-        //request.getSession().removeAttribute("user");
-        request.getSession().invalidate();
+        request.getSession().removeAttribute("user");
+        //request.getSession().invalidate();
 
         return "redirect:/";
     }
@@ -135,7 +137,7 @@ public class AuthorizeController {
         cookie.setDomain("localhost");
         response.addCookie(cookie);
 
-        session.setAttribute(GlobalConst.CURRENT_USER, login.getData());
+        //session.setAttribute(GlobalConst.CURRENT_USER, login.getData());
         return login;
     }
 
@@ -166,8 +168,24 @@ public class AuthorizeController {
         cookie.setDomain("localhost");
         response.addCookie(cookie);
 
-        session.setAttribute(GlobalConst.CURRENT_USER, register.getData());
+        //session.setAttribute(GlobalConst.CURRENT_USER, register.getData());
         return register;
+    }
+
+    @GetMapping("/user/get")
+    @ResponseBody
+    public ResponseVO<User> getUser(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return ResponseVO.errorOf(ResponseEnum.NOT_LOGIN);
+        }
+        return ResponseVO.OkOf(user);
+    }
+
+    @GetMapping("user/{id}")
+    @ResponseBody
+    public ResponseVO<User> getUserById(@PathVariable("id") Integer id){
+        return userService.selectById(id);
     }
 
 }

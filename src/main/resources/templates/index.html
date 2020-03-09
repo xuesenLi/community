@@ -19,7 +19,7 @@
 
                 <div class="media" th:each="question : ${pagination.data}">
                     <div class="media-left">
-                        <a href="#">
+                        <a th:href="@{'/people/'+ ${question.user.id}}">
                             <img class="media-object img-rounded"
                                  th:src="${question.user.avatarUrl}">
                         </a>

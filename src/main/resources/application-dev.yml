@@ -5,18 +5,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/community?useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-  ##   数据源其他配置
-  #    initialSize: 5
-  #    minIdle: 5
-  #    maxActive: 20
-  #    maxWait: 60000
-  #    timeBetweenEvictionRunsMillis: 60000
-  #    minEvictableIdleTimeMillis: 300000
-  #    validationQuery: SELECT 1 FROM DUAL
-  #    testWhileIdle: true
-  #    testOnBorrow: false
-  #    testOnReturn: false
-  #    poolPreparedStatements: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,6 +16,11 @@ spring:
     encoding: UTF-8
     cache: false
     mode: LEGACYHTML5
+  redis:
+    database: 2
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
 
 #配置静态资源
 #  mvc:

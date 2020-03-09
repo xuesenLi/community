@@ -8,5 +8,4 @@ public class GlobalConst {
 
     public static final String CURRENT_USER = "user";
 
-
 }

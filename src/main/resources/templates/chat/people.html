@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="icon" href="/images/favicon.png" type="image/x-icon"/>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+
+<link rel="stylesheet" th:href="@{/lib/element-ui/lib/theme-chalk/index.css}"/>
+<link rel="stylesheet" href="/admin/css/people.css">
+<title>Title</title>
+
+<body>
+
+<div id="app">
+    <div class="page-loader" ref="loader">
+        <div class="page-loader__spinner">
+            <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+            </svg>
+        </div>
+    </div>
+    <div th:replace="common/header"></div>
+
+
+    <el-container class="people-container">
+        <el-header class="people-header">
+            <el-card :body-style="{ padding: '0px' }" class="header-card">
+                <img src="/admin/img/people-bg.jpg" alt="背景图" width="1100px" />
+                <div class="content">
+                    <img :src="user.avatarUrl" class="avatar" />
+                    <div class="introduce">
+                        <span class="name">{{user.name}}</span>
+                        <span class="autograph">{{user.bio}}</span>
+                        <el-form label-width="80px"  class="userinfo">
+                            <el-form-item label="性别">
+                                <!--<span v-if="user.gender==0">未知</span>
+                                <span v-else-if="user.gender==1">男</span>
+                                <span v-else-if="user.gender==2">女</span>-->
+                            </el-form-item>
+                            <el-form-item label="个人简介">
+                                <el-button type="text">点击查看个人简介</el-button>
+                            </el-form-item>
+                            <el-form-item label="行业"></el-form-item>
+                            <el-form-item label="个性网址"></el-form-item>
+                            <el-form-item label="公司"></el-form-item>
+                            <el-form-item label="职位"></el-form-item>
+                            <el-form-item label="学校"></el-form-item>
+                            <el-form-item label="专业"></el-form-item>
+                        </el-form>
+                    </div>
+                    <div class="operation">
+
+              <el-button
+                      v-if="!attType"
+                      size="medium"
+                      icon="el-icon-plus"
+                      type="primary" @click="unAttType">关注</el-button>
+              <el-button v-else size="medium" type="primary" @click="unAttType">已关注</el-button>
+            </span>
+
+                         <el-button size="medium"
+                        icon="el-icon-chat-round" @click="showMessageVisible">发私信</el-button>
+                    </div>
+                </div>
+            </el-card>
+        </el-header>
+    </el-container>
+
+
+
+    <el-dialog :title="user.name" :visible.sync="messageVisible" width="60%" center >
+
+        <div id="showMessage">
+
+            <div class="main">
+                <div class="message" ref="box">
+                    <ul>
+                        <li v-for="(item,key) in messageList" :id="key == (messageList.length - 1) ? 'end' : ''">
+                            <p class="time">
+                                <span>{{item.time}}</span>
+                            </p>
+                            <div :class="'main ' +  (item.from.id == form.user.id ? 'self': '')">
+                                <img class="avatar" :src="item.from.avatarUrl"/>
+                                <span class="main-name">{{item.from.name}}</span>
+                                <div class="text">{{item.message}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text">
+                    <el-input
+                            v-model="form.message" @keyup.native.enter="send"
+                            type="textarea" :rows="5" placeholder="请输入内容，按 Enter 键发送">
+                    </el-input>
+                    <div class="btn">
+                        <el-button @click="clean" size="mini" type="danger">清空</el-button>
+                        <el-button @click="send" size="mini" icon="el-icon-position" type="success">发送</el-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </el-dialog>
+
+
+</div>
+</body>
+
+<div th:replace="common/js"></div>
+<script type="text/javascript" th:src="@{/admin/js/people.js}"></script>
+</html>

@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("lxs.com.community.mapper")
-@EnableScheduling //开启定时器 schedule
+//开启定时器 schedule
 public class CommunityApplication {
 
     public static void main(String[] args) {

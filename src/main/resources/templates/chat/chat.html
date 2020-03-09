@@ -15,28 +15,10 @@
             </svg>
         </div>
     </div>
-    <div role="alert" class="el-notification left" style="top: 16px; z-index: 2000;">
-        <i class="el-notification__icon el-icon-success"></i>
-        <div class="el-notification__group is-with-icon">
-            <h2 class="el-notification__title">系统信息</h2>
-            <div class="el-notification__content">
-                <p>
-                    在线用户： {{online}}
-                    <br>
-                    开源地址：<a href="https://github.com/TyCoding/boot-chat/" target="_blank">boot-chat</a>
-                    <br>
-                    作者：<a href="https://www.tycoding.cn/" target="_blank">https://www.tycoding.cn/</a>
-                    <br>
-                    <br>
-                    <el-button @click="logout" style="float: right" size="mini" type="danger" plain>注销</el-button>
-                </p>
-            </div>
-        </div>
-    </div>
     <div class="sidebar">
         <div class="card">
             <header>
-                <img class="avatar" width="40" height="40" :alt="user.name" :src="user.avatar">
+                <img class="avatar" width="40" height="40" :alt="user.name" :src="user.avatarUrl">
                 <p class="name">{{user.name}}</p>
             </header>
             <footer>
@@ -45,18 +27,19 @@
         </div>
         <div class="list">
             <ul>
-                <li :class="{ active: current_window_id === 0 }" @click="selectWindow(0)">
+                <li :class="{ active: current_window_id === 0 }">
                     <img class="avatar" width="30" height="30" src="/avatar/group.png">
                     <p class="name">官方群组</p>
                 </li>
                 <li v-for="item in userList" v-if="item.id != form.id" :class="{ active: current_window_id === item.id }"
-                    @click="selectWindow(item.id)">
-                    <img class="avatar" width="30" height="30" :alt="item.name" :src="item.avatar">
+                    >
+                    <img class="avatar" width="30" height="30" :alt="item.name" :src="item.avatarUrl">
                     <p class="name">{{item.name}}</p>
                 </li>
             </ul>
         </div>
     </div>
+
     <div class="main">
         <div class="message" ref="box">
             <ul>
@@ -65,7 +48,7 @@
                         <span>{{item.time}}</span>
                     </p>
                     <div :class="'main ' +  (item.from.id == form.id ? 'self': '')">
-                        <img class="avatar" width="30" height="30" :src="item.from.avatar"/>
+                        <img class="avatar" width="30" height="30" :src="item.from.avatarUrl"/>
                         <span class="main-name">{{item.from.name}}</span>
                         <div class="text">{{item.message}}</div>
                     </div>
@@ -86,7 +69,7 @@
 </div>
 
 
-<div th:replace="./common/js"></div>
+<div th:replace="common/js"></div>
 <script type="text/javascript" th:src="@{/admin/js/chat.js}"></script>
 </body>
 

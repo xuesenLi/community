@@ -5,7 +5,8 @@
     <head th:insert="~{common :: head}"></head>
 </head>
 <body>
-<div th:insert="~{common :: nav}"></div>
+
+<div th:replace="common/header"></div>
 
 
 <div class="jumbotron" style="min-height: 300px;">
@@ -13,9 +14,9 @@
         <p th:text="${message}">服务太热啦，要不然稍等下再来试试~</p>
         <p><a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a></p>
     </div>
-    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <!--<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
         <img class="img-thumbnail" style="width: 35%;" src="/images/ppy.jpg">
-    </div>
+    </div>-->
 </div>
 
 </div>

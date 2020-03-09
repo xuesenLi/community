@@ -1,7 +1,9 @@
 package com.lxs.community.controller;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @author Mr.Li
@@ -44,6 +46,14 @@ public class PageJumpController {
     public String error(){
 
         return "error";
+    }
+
+    /**
+     * 跳转到people.html
+     */
+    @GetMapping("people/{id}")
+    public String toPeople(@PathVariable("id") Integer id){
+        return "chat/people";
     }
 
 

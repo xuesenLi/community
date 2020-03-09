@@ -23,6 +23,10 @@ public enum ResponseEnum {
 
     NOT_LOGIN(4, "您还未登录"),
 
+    USER_EXIST(5, "当前用户已被注销或删除"),
+
+
+
 
     ;
 

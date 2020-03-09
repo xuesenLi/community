@@ -11,6 +11,7 @@ new Vue({
             //github请求地址
             githubGETString: 'https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://localhost:8887/callback&scope=user&state=1',
             user: {
+                id: '',
                 email: '',
                 password: '',
                 bio: '',
@@ -51,7 +52,7 @@ new Vue({
                 password: this.user.password
             }
             //参数校验
-            this.$http.post(api.login(), JSON.stringify(loginForm)).then(res => {
+            this.$http.post(api.user.login, JSON.stringify(loginForm)).then(res => {
                 if(res.body.code == 200){
                 this._message("登录成功", "success");
                 window.location.href = api.toIndex();
@@ -96,7 +97,7 @@ new Vue({
                  return;
              }*/
 
-            this.$http.post(api.regster(), JSON.stringify(this.user)).then(res => {
+            this.$http.post(api.user.register, JSON.stringify(this.user)).then(res => {
                 if(res.body.code == 200){
                 //注册成功
                 //登录

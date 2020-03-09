@@ -39,9 +39,6 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private UserInfoMapper userInfoMapper;
-
 
     @Autowired
     private NotificationMapper notificationMapper;
