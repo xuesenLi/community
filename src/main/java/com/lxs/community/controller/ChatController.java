@@ -3,9 +3,11 @@ package com.lxs.community.controller;
 import com.lxs.community.dto.MessageVO;
 import com.lxs.community.dto.ResponseVO;
 import com.lxs.community.dto.UserVO;
+import com.lxs.community.enums.ResponseEnum;
 import com.lxs.community.model.User;
 import com.lxs.community.service.ChatService;
 import com.lxs.community.utils.GlobalConst;
+import com.lxs.community.webSocket.WebsocketServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,6 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-
-
     /**
      * 获取指定用户的聊天消息内容
      *
@@ -38,6 +38,9 @@ public class ChatController {
     public ResponseVO<List<MessageVO>> selfList(@PathVariable("toId") Integer toId,
                                           HttpSession session) {
         User user = (User) session.getAttribute(GlobalConst.CURRENT_USER);
+        if(user == null){
+            return ResponseVO.errorOf(ResponseEnum.NOT_LOGIN);
+        }
         List<MessageVO> messageVOList = chatService.selfList(user.getId(), toId);
         log.info("messageVOList = {}", messageVOList);
 
@@ -52,9 +55,10 @@ public class ChatController {
         UserVO userVO = this.convertFormUser(user);
         messageVO.setFrom(userVO);
 
-
         //TODO  通过websocket 通信去实现
-        return chatService.pushMessage(messageVO);
+        WebsocketServerEndpoint endpoint = new WebsocketServerEndpoint();
+
+        return endpoint.sendTo(messageVO);
 
     }
 

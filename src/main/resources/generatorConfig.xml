@@ -30,33 +30,33 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.lxs.community.pojo" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.lxs.community.model" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <!-- 给string类型添加 .trim()方法-->
             <!--            <property name="trimStrings" value="true" />-->
         </javaModelGenerator>
 
         <!--生成xml文件位置-->
-        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <!--生成...Mapper文件-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lxs.community.dao" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lxs.community.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!--数据库表名对应 -->
 
-        <table tableName="user_info" domainObjectName="UserInfo" enableCountByExample="false"
+        <table tableName="follow" domainObjectName="Follow" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 
         </table>
 
-        <table tableName="questions" domainObjectName="Questions" enableCountByExample="false"
+     <!--   <table tableName="questions" domainObjectName="Questions" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 
-        </table>
+        </table>-->
 
         <!--  不需要带有Example的方法
             enableCountByExample="false"

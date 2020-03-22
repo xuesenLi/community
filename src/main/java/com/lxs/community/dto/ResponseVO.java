@@ -71,5 +71,9 @@ public class ResponseVO<T> {
         return new ResponseVO<T>(ResponseEnum.SUCCESS.getCode(), data);
     }
 
+    public static <T> ResponseVO<T> OkOf(ResponseEnum responseEnum) {
+        return new ResponseVO<T>(responseEnum.getCode(), responseEnum.getMessage());
+    }
+
 
 }

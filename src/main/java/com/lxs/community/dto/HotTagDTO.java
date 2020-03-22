@@ -19,9 +19,12 @@ public class HotTagDTO implements Comparable {
     //总浏览数
     private Integer viewCountSum;
 
-    //默认为小顶堆， 需要重写为大顶堆
+    //实现为小顶堆
     @Override
     public int compareTo(Object o) {
         return this.getPriority() - ((HotTagDTO) o).getPriority();
     }
+
+
+
 }

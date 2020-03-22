@@ -2,6 +2,7 @@ package com.lxs.community.service;
 
 import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.QuestionDTO;
+import com.lxs.community.dto.QuestionQueryDTO;
 import com.lxs.community.mapper.QuestionMapper;
 import com.lxs.community.mapper.UserMapper;
 import com.lxs.community.model.Question;
@@ -23,7 +24,7 @@ import java.util.List;
 public interface QuestionService {
 
     //分页查询
-    PaginationDTO list(String s, String tag, Integer page, Integer size);
+    PaginationDTO list(QuestionQueryDTO questionQueryDTO, Integer page, Integer size);
 
     PaginationDTO list(Integer userId, Integer page, Integer size);
 

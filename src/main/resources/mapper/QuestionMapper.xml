@@ -6,7 +6,7 @@
 
 
     <!--模糊查找-->
-    <select id="selectQuestionByTags" parameterType="question" resultType="question">
+    <select id="selectQuestionByTags" parameterType="com.lxs.community.model.Question" resultType="com.lxs.community.model.Question">
         SELECT * FROM question
         WHERE id != #{id} AND tag regexp #{tag}
     </select>
@@ -20,11 +20,17 @@
             <if test="tag != null and tag != ''">
                 AND tag regexp #{tag}
             </if>
+            <if test=" creatorSet != null">
+                AND creator in
+                <foreach collection="creatorSet" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
         </where>
     </select>
 
     <!---->
-    <select id="selectBySearch" parameterType="com.lxs.community.dto.QuestionQueryDTO" resultType="question">
+    <select id="selectBySearch" parameterType="com.lxs.community.dto.QuestionQueryDTO" resultType="com.lxs.community.model.Question">
         select * from question
         <where>
             <if test="search != null and search != ''">
@@ -32,6 +38,12 @@
             </if>
             <if test="tag != null and tag != ''">
                 AND tag regexp #{tag}
+            </if>
+            <if test=" creatorSet != null">
+                AND creator in
+                <foreach collection="creatorSet" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
         order by gmt_create desc

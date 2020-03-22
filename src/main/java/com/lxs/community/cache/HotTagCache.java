@@ -2,6 +2,7 @@ package com.lxs.community.cache;
 
 import com.lxs.community.dto.HotTagDTO;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -12,13 +13,15 @@ import java.util.*;
  */
 @Component
 @Data
+@Slf4j
 public class HotTagCache {
     private List<HotTagDTO> hots = new ArrayList<>();
 
     //拿到热度最大的 Max 个的标签
-    //通过定时器调用这个方法
+    //通过定时器调用这个方法   Map<String, HotTagDTO> tags  保存了系统的所有标签
     public void updateTags(Map<String, HotTagDTO> tags) {
         int Max = 6;
+        //构建优先级队列(HotTagDTO 实现 Comparable改造为) 默认从小到大 队头 最小。 队列大小为 Max
         PriorityQueue<HotTagDTO> priorityQueue = new PriorityQueue<>();
         tags.forEach((name, hots) -> {
             HotTagDTO hotTagDTO = new HotTagDTO();
@@ -46,7 +49,7 @@ public class HotTagCache {
             poll = priorityQueue.poll();
         }
         hots = sortedTags;
-        System.out.println(hots);
 
+        log.info("hots = {}", hots);
     }
 }

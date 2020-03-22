@@ -7,13 +7,15 @@
     <head th:insert="~{common :: head}"></head>
     <head th:insert="~{common :: markdown}"></head>
 
+    <script src="/js/community.js" type="application/javascript"></script>
+
 </head>
 <script type="application/javascript">
 
 </script>
 
 <body>
-<div th:insert="~{common :: nav}"></div>
+<div th:replace="common/header"></div>
 
 <div class="container-fluid main profile">
     <div class="row">
@@ -140,7 +142,7 @@
                 <h4>发起人</h4>
                 <div class="media">
                     <div class="media-left">
-                        <a href="#">
+                        <a th:href="@{'/people/'+ ${question.user.id}}">
                             <img class="media-object img-rounded"
                                  th:src="${question.user.avatarUrl}">
                         </a>

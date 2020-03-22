@@ -25,6 +25,12 @@ public enum ResponseEnum {
 
     USER_EXIST(5, "当前用户已被注销或删除"),
 
+    USER_NOT_ONLINE(6, "对方当前不在线"),
+
+    USER_FOLLOW_FAIL(7, "用户关注失败"),
+
+    USER_UN_FOLLOW_FAIL(8, "取消用户关注失败"),
+
 
 
 

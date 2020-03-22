@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectByToken(String token) {
         User user = userMapper.selectByToken(token);
-        log.info("user =======", user);
+       //log.info("user ======={}", user.getName());
         return user;
     }
 

@@ -51,18 +51,19 @@
                             <el-form-item label="专业"></el-form-item>
                         </el-form>
                     </div>
-                    <div class="operation">
+                    <div class="operation" v-if="showOperational">
 
-              <el-button
-                      v-if="!attType"
-                      size="medium"
-                      icon="el-icon-plus"
-                      type="primary" @click="unAttType">关注</el-button>
-              <el-button v-else size="medium" type="primary" @click="unAttType">已关注</el-button>
-            </span>
-
-                         <el-button size="medium"
-                        icon="el-icon-chat-round" @click="showMessageVisible">发私信</el-button>
+                        <el-button
+                                v-if="!attType"
+                                size="medium"
+                                icon="el-icon-plus"
+                                type="primary" @click="unAttType">关注
+                        </el-button>
+                        <el-button v-else size="medium" type="primary" @click="unAttType">已关注</el-button>
+                        <el-button
+                                size="medium"
+                                icon="el-icon-chat-round" @click="showMessageVisible">发私信
+                        </el-button>
                     </div>
                 </div>
             </el-card>

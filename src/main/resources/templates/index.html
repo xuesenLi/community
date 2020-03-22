@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/head"></head>
-<link rel="stylesheet" th:href="@{/lib/element-ui/lib/theme-chalk/index.css}">
+<!--
+<script src="/admin/js/index.js" type="application/javascript"></script>
+-->
 <link rel="stylesheet" href="/css/index.css">
 <title>xuesen-community</title>
 <body>
 
 
-<div id="app">
+<div>
 
     <div th:replace="common/header"></div>
 
     <div class="container-fluid main">
         <div class="row">
             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h2>
-                <hr>
-
+                <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h3>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" th:class="${sort == null ? 'active':''}">
+                        <a th:href="@{/}">推荐</a>
+                    </li>
+                    <li role="presentation" th:class="${sort == 'follow' ? 'active':''}">
+                        <a th:href="@{/(sort='follow')}">关注</a>
+                    </li>
+                </ul>
                 <div class="media" th:each="question : ${pagination.data}">
                     <div class="media-left">
                         <a th:href="@{'/people/'+ ${question.user.id}}">
@@ -95,7 +103,7 @@
 
 </body>
 
-<div th:replace="common/js"></div>
-<script th:src="@{/admin/js/index.js}"></script>
+<!--<div th:replace="common/js"></div>-->
+<!--<script th:src="@{/admin/js/index.js}"></script>-->
 
 </html>

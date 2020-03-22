@@ -3,12 +3,16 @@ package com.lxs.community.service.impl;
 import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.QuestionDTO;
 import com.lxs.community.dto.QuestionQueryDTO;
+import com.lxs.community.enums.SortTypeEnum;
 import com.lxs.community.exception.CustomizeErrorCode;
 import com.lxs.community.exception.CustomizeException;
+import com.lxs.community.mapper.FollowMapper;
 import com.lxs.community.mapper.QuestionMapper;
 import com.lxs.community.mapper.UserMapper;
+import com.lxs.community.model.Follow;
 import com.lxs.community.model.Question;
 import com.lxs.community.model.User;
+import com.lxs.community.service.FollowService;
 import com.lxs.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -34,19 +39,31 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private FollowMapper followMapper;
+
+
     //分页查询
-    public PaginationDTO list(String search, String tag, Integer page, Integer size) {
+    public PaginationDTO list(QuestionQueryDTO questionQueryDTO, Integer page, Integer size) {
 
         //需要分割search 但是search不能为空
-        if (search != null && search != "") {
-            String[] split = search.split(" ");
-            search = Arrays.stream(split).collect(Collectors.joining("|"));
+        if (questionQueryDTO.getSearch() != null && questionQueryDTO.getSearch() != "") {
+            String[] split = questionQueryDTO.getSearch().split(" ");
+            questionQueryDTO.setSearch(Arrays.stream(split).collect(Collectors.joining("|")));
         }
-
-        //查询总数
-        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
-        questionQueryDTO.setSearch(search);
-        questionQueryDTO.setTag(tag);
+        //关注follow
+        if(SortTypeEnum.FOLLOW.getType().equals(questionQueryDTO.getSort())){
+            if(questionQueryDTO.getCreator() == null)
+                return new PaginationDTO();
+            //去关注表中获取关注用户
+            List<Follow> follows = followMapper.selectByUid(questionQueryDTO.getCreator());
+            if(follows.size() == 0)
+                return new PaginationDTO();
+            Set<Integer> followSet = follows.stream()
+                    .map(Follow::getFId)
+                    .collect(Collectors.toSet());
+            questionQueryDTO.setCreatorSet(followSet);
+        }
 
         Integer totalCount = questionMapper.countBySearch(questionQueryDTO);
         //如果totalCount == 0， 就没必要在做后面分页查找的 操作了

@@ -5,7 +5,9 @@ new Vue({
 
             //当前登录用户
             //currentUserId: '',
-            attType: false, // 对该用户关注状态
+            attType: '', // 对该用户关注状态
+
+            showOperational: true, //当前用户与登录用户是否一致
 
             /*当前用户主页*/
             user: {
@@ -89,16 +91,23 @@ new Vue({
             //获取当前的登录用户信息
             this.initCurrentUser();
 
-            /**
-             * 每次刷新页面，主动链接WebSocket
-             */
-            this.initWebSocket();
+            //判断是否关注该用户 attType
+            this.initAttType();
+        },
 
+        initAttType(){
+            this.$http.get(api.follow.getFollow(this.user.id)).then(res =>{
+                if(res.body.code == 200){
+                this.attType = res.body.data.follow;
+                }else{
+                    this._message(res.body.message, "error");
+                }
+            })
         },
 
         initWebSocket(){
             let $this = this;  //声明一个变量指向Vue实例this，保证作用域一致
-            this.websocket = new WebSocket(api.chat.websocket(this.form.id))
+            this.websocket = new WebSocket(api.chat.websocket(this.form.user.id))
             //链接发送错误时调用
             this.websocket.onerror = function () {
                 $this._notify('提醒', 'WebSocket链接错误', 'error')
@@ -109,29 +118,11 @@ new Vue({
             }
             //接收到消息时回调
             this.websocket.onmessage = function (event) {
-                $this.clean()
-                let entity = JSON.parse(event.data);
 
-                //上线提醒
-                if (entity.data == undefined) {
-                    $this.initUser()
-                    $this._notify('消息', entity.msg, 'info')
-                    $this.scroll()
-                    return;
-                }
-
-                //消息接收  JSON.parse(event.data).data  == R.data
-                let data = JSON.parse(event.data).data
-                if (data.to != undefined) {
-                    //单个窗口发送，仅推送到指定的窗口
-                    if (data.from.id == $this.current_window_id) {
-                        $this.messageList.push(data) // 使 接受者 看到消息。。
-                    }
-                } else {
-                    //群发，推送到官方群组窗口
-                    $this.messageList.push(data)
-                }
-                $this.scroll()
+                //消息接收  JSON.parse(event.data).data  == ResponseVO.data
+                let data = JSON.parse(event.data).data;
+                $this.messageList.push(data)
+                $this._notify('提醒', '您有新的消息', 'success')
             }
             //链接关闭时调用
             this.websocket.onclose = function () {
@@ -141,11 +132,15 @@ new Vue({
         },
 
 
+        /*获取当前登录用户*/
         initCurrentUser(){
-
             this.$http.get(api.user.getUser).then(res =>{
                 if(res.body.code == 200){
                     this.form.user = res.body.data;
+                    //需要判断 当前用户与登录用户是否一致, 如果相等隐藏
+                    if(this.form.user.id === this.user.id){
+                        this.showOperational = false;
+                    }
                 }else{
                     this._message(res.body.message, "error");
                 }
@@ -154,7 +149,6 @@ new Vue({
 
         initUser(){
             this.$http.get(api.user.getUserById(this.user.id)).then(res =>{
-                console.log("res", res);
                 if(res.body.code == 200){
                     this.user = res.body.data;
                 }else{
@@ -163,18 +157,28 @@ new Vue({
             })
         },
 
-        /*关注该用户 */
-        attPeople(){
-
-
-        },
 
         /*关注 或则取消 */
         unAttType(){
             if(this.attType){
-                this.attType = false;
+                //取消关注
+                this.$http.delete(api.follow.unFollow(this.user.id)).then(res =>{
+                    if(res.body.code == 200){
+                        this.attType = false;
+                    }else{
+                        this._message(res.body.message, "error");
+                    }
+                })
+
             }else{
-                this.attType = true;
+                //关注
+                this.$http.put(api.follow.follow(this.user.id)).then(res =>{
+                    if(res.body.code == 200){
+                        this.attType = true;
+                    }else{
+                        this._message(res.body.message, "error");
+                    }
+                })
             }
             /*修改数据库 */
 
@@ -191,12 +195,17 @@ new Vue({
                 to: this.user
             }
             this.$http.post(api.chat.sendMessateByUser, JSON.stringify(data)).then(res =>{
-                if(res.body.code == 200){
+                if(res.body.code == 6){
+                    //表示对方不在线
+                    this.initSelfMessage() //使自己的页面显示发送的消息。
+                    this.clean()
+                    this._notify('提醒', res.body.message, 'success')
+                }else if(res.body.code == 200){
                     this.initSelfMessage() //使自己的页面显示发送的消息。
                     this.clean()
                     this._notify('提醒', '消息推送成功', 'success')
-            }else{
-                    this._notify('提醒', res.body.msg, 'error')
+                }else{
+                    this._notify('提醒', res.body.message, 'error')
                 }
             })
         },
@@ -211,7 +220,7 @@ new Vue({
                 if(res.body.code == 200){
                     this.messageList = res.body.data;
                 }else{
-                    this._message("消息发送失败:" + res.body.message, "warning");
+                    this._message(res.body.message, "error");
                 }
 
             })
@@ -219,15 +228,30 @@ new Vue({
 
         /*显示聊天记录框 */
         showMessageVisible(){
+            if(this.form.user.id == null || this.form.user.id == ''){
+                this._message("您还未登录", "error");
+                return;
+            }
             this.initSelfMessage();
             this.messageVisible = true;
+            /**
+             * 每次刷新页面，主动链接WebSocket
+             */
+            this.initWebSocket();
         },
 
 
+    },
 
+    watch: {
+        messageVisible:function(){
+            if(this.messageVisible == false){
+                console.log("watch: messageVisible")
+                this.websocket.close()
+            }
+        }
+    },
 
-
-    }
 
 })
 

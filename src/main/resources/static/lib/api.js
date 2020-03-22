@@ -13,6 +13,19 @@ let api = {
 
     },
 
+    follow: {
+        getFollow(fId){
+            return '/follow/' + fId; //获取用户关注状态
+        },
+        follow(fId){
+            return '/follow/' + fId;
+        },
+        unFollow(fId){
+            return '/follow/' + fId;
+        },
+
+    },
+
     chat: {
         /* 获取当前用户与指定用户聊天记录Id */
         getMessageByToId(toId){

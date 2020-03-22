@@ -23,7 +23,7 @@ import java.util.Objects;
  * @date 2019/8/13 - 10:03
  */
 @Service
-public class NotificationServiceimpl implements NotificationService {
+public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private NotificationMapper notificationMapper;
@@ -33,6 +33,8 @@ public class NotificationServiceimpl implements NotificationService {
 
         //查询当前用户接受通知的总数,
         Integer totalCount = notificationMapper.countByReceiver(receiver);
+        if(totalCount == 0)
+            return new PaginationDTO();
 
         PaginationDTO<NotificationDTO> paginationDTO = new PaginationDTO<>();
         //计算分页显示的图标

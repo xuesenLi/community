@@ -30,7 +30,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("进入PreHandle....");
+        //log.info("进入PreHandle....");
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -49,7 +49,7 @@ public class SessionInterceptor implements HandlerInterceptor {
                 }
             }
         }
-        log.info("退出 PreHandle....");
+       // log.info("退出 PreHandle....");
         return true;
     }
 

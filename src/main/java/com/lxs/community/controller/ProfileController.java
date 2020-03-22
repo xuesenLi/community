@@ -4,6 +4,7 @@ import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.model.User;
 import com.lxs.community.service.NotificationService;
 import com.lxs.community.service.QuestionService;
+import com.lxs.community.utils.GlobalConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Mr.Li
@@ -29,11 +31,11 @@ public class ProfileController {
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action,
-                          Model model, HttpServletRequest request,
+                          Model model, HttpSession session,
                           @RequestParam(value = "page", defaultValue = "1") Integer page,
                           @RequestParam(value = "size", defaultValue = "5") Integer size) {
 
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) session.getAttribute(GlobalConst.CURRENT_USER);
         if (user == null) {
             return "redirect:/";
         }

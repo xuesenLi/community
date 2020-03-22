@@ -29,7 +29,7 @@ public class HotTagTasks {
     @Autowired
     private HotTagCache hotTagCache;
 
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 3)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 3)  // 启动项目默认执行一次， 然后每3 个小时执行一次，
     //@Scheduled(cron = "0 0 1 * * *")   //凌晨一点去执行
     public void reportCurrentTime() {
         int offset = 0;
@@ -40,6 +40,7 @@ public class HotTagTasks {
         List<Question> list = new ArrayList<>();
         Map<String, HotTagDTO> tagMap = new HashMap<>();
 
+        //拿到所有的问题， 取出tag, 计算热度。
         while (offset == 0 || list.size() == limit) {
 
             list = questionMapper.findByQuestionAll(offset, limit);
@@ -73,18 +74,6 @@ public class HotTagTasks {
             }
             offset += limit;
         }
-
-
-/*       tagMap.forEach(
-               (k, v) -> {
-                   System.out.print(k);
-                   System.out.print(" : ");
-                   System.out.print(v.getPriority() + ", "+ v.getViewCountSum() + ", " + v.getQuestionCountSum());
-                   System.out.println();
-
-               }
-       );*/
-
 
         //拿到热度最大的 Max 个的标签
         hotTagCache.updateTags(tagMap);
