@@ -18,11 +18,11 @@ public class UserServiceTest extends CommunityApplicationTests {
     private UserMapper userMapper;
 
 
-    @Test
+ /*   @Test
     public void selectByToken(){
         String token = "9c0d242f-b809-4c49-b12d-c2a978bf1f07";
         User user = userMapper.selectByToken(token);
         log.info("user = {}", user);
 
-    }
+    }*/
 }

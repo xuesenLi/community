@@ -7,6 +7,17 @@ body {
     background-color: white;
     margin: 30px;
 }
+.mainProfile {
+    background-color: white;
+    margin: 30px;
+    min-height: 800px;
+}
+.mainArticle{
+    background-color: white;
+    margin: 30px;
+    min-height: 800px;
+    padding: 30px;
+}
 
 .side {
     margin: 5px 0;

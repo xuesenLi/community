@@ -19,7 +19,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li th:if="${session.user != null}">
-                        <a href="/publish">提问</a>
+                        <a href="/publish">写文章</a>
                     </li>
                     <li th:if="${session.user != null}">
                         <a href="/profile/replies">通知 <span class="badge" th:text="${session.unreadCount}"></span></a>
@@ -37,9 +37,10 @@
 
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/profile/questions">我的问题</a></li>
-                            <li><a href="/about">关于社区</a></li>
-                            <li><a href="/music" target="_blank" title="Music">Music</a></li>
+                            <li><a href="/profile/questions">我的创作</a></li>
+                            <li><a th:href="@{'/people/'+ ${session.user.id}}">我的主页</a></li>
+                            <!--<li><a href="/about">关于社区</a></li>-->
+                            <!--<li><a href="/music" target="_blank" title="Music">Music</a></li>-->
                             <li><a href="/logout">退出登陆</a></li>
                         </ul>
                     </li>

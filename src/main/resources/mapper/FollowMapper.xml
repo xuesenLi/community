@@ -111,5 +111,12 @@
     where u_id = #{uId,jdbcType=INTEGER}
   </select>
 
+  <select id="selectByFid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from follow
+    where f_id = #{fId,jdbcType=INTEGER}
+  </select>
+
 
 </mapper>

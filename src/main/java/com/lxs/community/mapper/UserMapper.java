@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Mr.Li
  * @date 2019/8/8 - 14:11
@@ -60,4 +63,6 @@ public interface UserMapper {
 
     @Update("update user set name=#{name}, gmt_modified=#{gmtModified}, avatar_url=#{avatarUrl}, token=#{token} where id = #{id} ")
     void update(User user);
+
+    List<User> selectByIdSet(@Param("fIdSet")Set<Integer> fIdSet);
 }

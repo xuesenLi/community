@@ -41,4 +41,7 @@ public interface QuestionService {
      * @return
      */
     List<QuestionDTO> selectQuestionByTags(QuestionDTO questionDTO);
+
+    void insert(Question question);
+
 }

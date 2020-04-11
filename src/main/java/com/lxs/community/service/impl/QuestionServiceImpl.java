@@ -3,10 +3,13 @@ package com.lxs.community.service.impl;
 import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.QuestionDTO;
 import com.lxs.community.dto.QuestionQueryDTO;
+import com.lxs.community.enums.ResponseEnum;
 import com.lxs.community.enums.SortTypeEnum;
 import com.lxs.community.exception.CustomizeErrorCode;
 import com.lxs.community.exception.CustomizeException;
+import com.lxs.community.exception.ReturnViewException;
 import com.lxs.community.mapper.FollowMapper;
+import com.lxs.community.mapper.PrivateArticleMapper;
 import com.lxs.community.mapper.QuestionMapper;
 import com.lxs.community.mapper.UserMapper;
 import com.lxs.community.model.Follow;
@@ -41,6 +44,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private FollowMapper followMapper;
+
+    @Autowired
+    private PrivateArticleMapper privateArticleMapper;
 
 
     //分页查询
@@ -208,4 +214,20 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDTOList;
     }
 
+
+    @Override
+    @Transactional
+    public void insert(Question question) {
+        //从私有文章中移除
+        int deleteCount = privateArticleMapper.deleteByPrimaryKey(question.getId());
+        if(deleteCount != 1){
+            throw new ReturnViewException(ResponseEnum.PRIVATE_TRANSFER_PUBLIC);
+        }
+
+        question.setId(null);
+        //将文章添加到共有文章
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(question.getGmtCreate());
+        questionMapper.create(question);
+    }
 }

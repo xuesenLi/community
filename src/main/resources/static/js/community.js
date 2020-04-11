@@ -37,7 +37,8 @@ function comment2target(targetId, type, content) {
                     var isAccepted = confirm(response.message);
                     if (isAccepted) {
                         //window.open("https://github.com/login/oauth/authorize?client_id=2859958f9f059979ed3a&redirect_uri=" + document.location.origin + "/callback&scope=user&state=1");
-                        window.open("https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://localhost:8887/callback&scope=user&state=1");
+                        //window.open("https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://localhost:8887/callback&scope=user&state=1");
+                        window.open("https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://xuesenli.top:80/callback&scope=user&state=1");
 
                         //localStorage : 用于保存整个网站的数据
                         window.localStorage.setItem("closable", true);

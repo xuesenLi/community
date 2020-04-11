@@ -19,6 +19,7 @@
             <hr>
             <form action="/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
+                <input type="hidden" name="articleType" th:value="${articleType}">
                 <div class="form-group">
                     <label for="title">问题标题(简单扼要)</label>
                     <input type="text" class="form-control" th:value="${title}" id="title" name="title"
@@ -93,15 +94,38 @@
                                  th:if="${error != null}">
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                            <button type="submit" class="btn btn-success btn-publish ">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" th:if="${articleType == null}">
+                            <button type="submit" class="btn btn-success btn-publish " style="margin-left: 10px">
                                 发布
+                            </button>
+                            <button type="submit" formaction="/private-article/publish" class="btn btn-success btn-publish ">
+                                保存为私密
+                            </button>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" th:if="${articleType == 0}">
+                            <button type="submit" class="btn btn-success btn-publish " style="margin-left: 10px">
+                                公开文章
+                            </button>
+                            <button type="submit" formaction="/private-article/publish" class="btn btn-success btn-publish ">
+                                修改
+                            </button>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" th:if="${articleType == 1}">
+                            <button type="submit" class="btn btn-success btn-publish " style="margin-left: 10px">
+                                修改
                             </button>
                         </div>
                     </div>
+
+
                 </div>
             </form>
-
+            <form action="/md/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+                <button type="submit" class="btn btn-success btn-publish ">
+                    导入
+                </button>
+            </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>问题发起指南</h3>

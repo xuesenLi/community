@@ -9,7 +9,7 @@ new Vue({
     data() {
         return {
             //github请求地址
-            githubGETString: 'https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://localhost:8887/callback&scope=user&state=1',
+            githubGETString: 'https://github.com/login/oauth/authorize?client_id=67e02325958dedeaf220&redirect_uri=http://xuesenli.top:80/callback&scope=user&state=1',
             user: {
                 id: '',
                 email: '',

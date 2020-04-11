@@ -1,10 +1,15 @@
 package com.lxs.community.controller;
 
-import com.lxs.community.dto.FileDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.IOException;
+
 
 /**
  * @author Mr.Li
@@ -12,15 +17,39 @@ import java.io.File;
  * 文件上传，
  */
 @Controller
+@Slf4j
+@RequestMapping("/md")
 public class FileController {
 
-/*    @RequestMapping("/file/upload")
-    public FileDTO upload(){
-        FileDTO fileDTO = new FileDTO();
-        fileDTO.setSuccess(1);
-        fileDTO.setUrl("/images/pyy.jpg");
+    @PostMapping("/upload")
+    public String singleFileUpload(@RequestParam("file") MultipartFile file,
+                                Model model) {
+        if (file.isEmpty()) {
+            model.addAttribute("error", "文件不能为空");
+            return "publish";
+        }
 
-        return fileDTO;
-    }*/
+        String fileName = file.getOriginalFilename();
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        log.info("suffix = {}", suffix);
+        if(!"md".equals(suffix)){
+            model.addAttribute("error", "文件的拓展名必须为 .md");
+            return "publish";
+        }
+
+        try {
+
+            byte[] bytes = file.getBytes();
+            String content=new String(bytes,"UTF-8");
+
+           model.addAttribute("description", content);
+           model.addAttribute("title", fileName);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "publish";
+    }
 
 }

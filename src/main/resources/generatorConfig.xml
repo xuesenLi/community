@@ -48,9 +48,9 @@
 
         <!--数据库表名对应 -->
 
-        <table tableName="follow" domainObjectName="Follow" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-
+        <table tableName="private_article" domainObjectName="PrivateArticle" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <!--detail，sub_images在数据库中为text属性-->
+            <columnOverride column="description" jdbcType="VARCHAR" />
         </table>
 
      <!--   <table tableName="questions" domainObjectName="Questions" enableCountByExample="false"

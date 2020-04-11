@@ -7,22 +7,22 @@ spring:
     #    不配，默认使用tomcat的数据源
     type: com.alibaba.druid.pool.DruidDataSource
 
-    #   数据源其他配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-
   jpa:
     hibernate:
       ddl-auto: update
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    encoding: UTF-8
+    cache: false
+    mode: LEGACYHTML5
+  redis:
+    database: 2
+    host: 39.96.18.72
+    port: 6379
+    password: lxs
+
 server:
   port: 80
 #  servlet:

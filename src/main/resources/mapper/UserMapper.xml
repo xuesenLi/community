@@ -181,4 +181,19 @@
         where token = #{token,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectByIdSet" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            id in
+            <if test="fIdSet != null">
+                <foreach collection="fIdSet" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+
 </mapper>

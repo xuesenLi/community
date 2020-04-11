@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/head"></head>
+<head th:insert="~{common :: markdown}"></head>
+
+<title th:text="${privateArticle.title}"></title>
+
+<body>
+<div th:replace="common/header"></div>
+
+<div class="mainArticle">
+    <h4 class="question-title"><span th:text="${privateArticle.title}"></span></h4>
+    <span class="text-desc">
+                发布时间：<span th:text="${#dates.format(privateArticle.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> |
+            </span>
+    <hr>
+
+    <!--内容-->
+    <div id="question-view">
+        <textarea style="display:none;" th:text="${privateArticle.description}"></textarea>
+        <!--<span th:text="${question.description}"></span>-->
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            editormd.markdownToHTML("question-view", {});
+        });
+    </script>
+
+    <!--标签-->
+    <hr>
+    <div>
+                    <span class="label label-info question-tag" th:each="tag : ${privateArticle.tag.split(',')}">
+                        <span class="glyphicon glyphicon-tags"></span>
+                        <span class="label label-info" th:text="${tag}"></span>
+                    </span>
+    </div>
+
+    <!--编辑-->
+    <hr>
+    <div>
+        <a th:href="@{'/private-article/publish/'+${privateArticle.id}}" class="community-menu"
+           th:if="${session.user != null && session.user.id == privateArticle.creator}">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+        </a>
+    </div>
+</div>
+
+
+<div th:insert="~{common :: foot}"></div>
+</body>
+</html>

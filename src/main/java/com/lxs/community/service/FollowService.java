@@ -1,5 +1,6 @@
 package com.lxs.community.service;
 
+import com.lxs.community.dto.PaginationDTO;
 import com.lxs.community.dto.ResponseVO;
 
 /**
@@ -31,4 +32,23 @@ public interface FollowService {
      * @return
      */
     ResponseVO getFollow(Integer uId, Integer fId);
+
+    /**
+     * 获取粉丝信息
+     * @param uId
+     * @param page
+     * @param size
+     * @return
+     */
+    PaginationDTO getFansList(Integer uId, Integer page, Integer size);
+
+    /**
+     * 获取关注人列表
+     * @param uId
+     * @param page
+     * @param size
+     * @return
+     */
+    PaginationDTO getFollowList(Integer uId, Integer page, Integer size);
+
 }

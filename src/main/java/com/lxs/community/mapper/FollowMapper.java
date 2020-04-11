@@ -33,4 +33,6 @@ public interface FollowMapper {
 
     List<Follow> selectByUid(Integer uId);
 
+    List<Follow> selectByFid(Integer fId);
+
 }
